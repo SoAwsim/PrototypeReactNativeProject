@@ -1,7 +1,15 @@
-import LoginScreen from './screens/login/LoginScreen';
+import { PaperProvider } from 'react-native-paper';
+import { StatusBar } from 'expo-status-bar';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import NavigationRoot from './src/NavigationRoot';
 
 export default function App() {
   return (
-    LoginScreen()
+	<SafeAreaProvider>
+		<PaperProvider>
+			<NavigationRoot />
+			<StatusBar style='auto' />
+    	</PaperProvider>
+	</SafeAreaProvider>
   );
 }
