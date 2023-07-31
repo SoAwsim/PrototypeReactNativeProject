@@ -14,18 +14,14 @@ export default function LoginScreen({ navigation }) {
     const loginUser = (username, password) => {
         const loginAPI = "https://workbench.persystlab.org/api/login.php";
 
-        try {
-            const promise = axios.post(loginAPI, {
-                username: username,
-                password: password,
-            });
+        const promise = axios.post(loginAPI, {
+            username: username,
+            password: password,
+        });
 
-            const data = promise.then(response => response.data);
+        const data = promise.then(response => response.data);
 
-            return data;
-        } catch (error) {
-            console.error('An error occurred during the API request :', error);
-        }
+        return data;
       };
 
     function emailInputHandler(enteredEmail) {
