@@ -64,15 +64,22 @@ export default function LoginScreen({ navigation }) {
                 value={enteredEmail}
                 onChangeText={emailInputHandler}
                 error={isError}
+                keyboardType="email-address"
+                returnKeyType="next"
+                blurOnSubmit={false}
+                onSubmitEditing={() => this.passwordInput.focus()}
                 style={loginStyle(insets).TextInput}
             />
             <TextInput
+                ref={input => this.passwordInput = input}
                 mode="outlined"
                 label="Enter your password"
                 value={enteredPassword}
                 onChangeText={passwordInputHandler}
                 secureTextEntry={true}
                 error={isError}
+                returnKeyType="send"
+                onSubmitEditing={() => signInHandler()}
                 style={loginStyle(insets).TextInput}
             />
             <Button
