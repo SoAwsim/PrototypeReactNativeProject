@@ -1,7 +1,8 @@
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useState } from "react";
-import { StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
 import { TextInput, Button } from "react-native-paper";
+import { loginStyle } from "./LoginStyle";
 import axios from "axios";
 
 export default function LoginScreen({ navigation }) {
@@ -55,7 +56,7 @@ export default function LoginScreen({ navigation }) {
     };
 
     return (
-        <View style={styles(insets).SafeAreaFlex}>
+        <View style={loginStyle(insets).SafeAreaFlex}>
             <TextInput
                 mode="outlined"
                 label="Enter your email"
@@ -63,7 +64,7 @@ export default function LoginScreen({ navigation }) {
                 value={enteredEmail}
                 onChangeText={emailInputHandler}
                 error={isError}
-                style={styles(insets).TextInput}
+                style={loginStyle(insets).TextInput}
             />
             <TextInput
                 mode="outlined"
@@ -72,38 +73,15 @@ export default function LoginScreen({ navigation }) {
                 onChangeText={passwordInputHandler}
                 secureTextEntry={true}
                 error={isError}
-                style={styles(insets).TextInput}
+                style={loginStyle(insets).TextInput}
             />
             <Button
                 mode="contained"
                 onPress={signInHandler}
-                style={styles(insets).SignInButton}
+                style={loginStyle(insets).SignInButton}
             >
                 Sign In
             </Button>
         </View>
     );
 }
-
-const styles = (insets) => StyleSheet.create({
-    SafeAreaFlex: {
-        flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
-        paddingTop: insets.top,
-        paddingBottom: insets.bottom,
-        paddingLeft: insets.left,
-        paddingRight: insets.right
-    },
-
-    TextInput: {
-        width: '95%',
-        margin: 10
-    },
-
-    SignInButton: {
-        margin: 40,
-        width: '75%'
-    }
-});

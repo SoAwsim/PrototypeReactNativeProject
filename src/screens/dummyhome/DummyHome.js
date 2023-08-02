@@ -17,7 +17,6 @@ export default function DummyHome() {
 const styles = (insets) => StyleSheet.create({
     SafeAreaFlex: {
         flex: 1,
-        backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
         paddingTop: insets.top,

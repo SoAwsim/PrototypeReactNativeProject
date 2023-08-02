@@ -5,9 +5,9 @@ import DummyHome from './screens/dummyhome/DummyHome';
 
 const Stack = createNativeStackNavigator();
 
-export default function NavigationRoot() {
+export default function NavigationRoot({ theme }) {
     return (
-        <NavigationContainer>
+        <NavigationContainer theme={theme}>
             <Stack.Navigator initialRouteName="Login" screenOptions={{headerShown: false}}>
                 <Stack.Screen name="Login" component={LoginScreen} />
                 <Stack.Screen name="DummyHome" component={DummyHome} />
