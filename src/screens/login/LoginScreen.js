@@ -1,9 +1,9 @@
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { useState } from "react";
-import { View } from 'react-native';
-import { TextInput, Button } from "react-native-paper";
-import { loginStyle } from "./LoginStyle";
 import axios from "axios";
+import { useState } from "react";
+import { ScrollView } from 'react-native';
+import { Button, TextInput } from "react-native-paper";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { loginStyle } from "./LoginStyle";
 
 export default function LoginScreen({ navigation }) {
     const insets = useSafeAreaInsets();
@@ -23,7 +23,7 @@ export default function LoginScreen({ navigation }) {
         const data = promise.then(response => response.data);
 
         return data;
-      };
+    };
 
     function emailInputHandler(enteredEmail) {
         setEnteredEmail(enteredEmail);
@@ -44,25 +44,27 @@ export default function LoginScreen({ navigation }) {
                     console.log("login");
                     navigation.reset({
                         index: 0,
-                        routes: [{name: 'DummyHome'}],
+                        routes: [{ name: 'DummyHome' }],
                     });
                 } else {
                     console.log("fail");
                     setError(true);
-                } 
+                }
             },
             err => console.log(err)
         );
     };
 
     return (
-        <View style={loginStyle(insets).SafeAreaFlex}>
+        <ScrollView contentContainerStyle={loginStyle(insets).SafeAreaFlex}>
             <TextInput
                 mode="outlined"
                 label="Enter your email"
                 placeholder="example@example.com"
                 value={enteredEmail}
                 onChangeText={emailInputHandler}
+                autoCapitalize="none"
+                autoComplete="email"
                 error={isError}
                 keyboardType="email-address"
                 returnKeyType="next"
@@ -76,6 +78,8 @@ export default function LoginScreen({ navigation }) {
                 label="Enter your password"
                 value={enteredPassword}
                 onChangeText={passwordInputHandler}
+                textContentType="password" // IOS 11+ password keychain support
+                autoComplete="current-password"
                 secureTextEntry={true}
                 error={isError}
                 returnKeyType="send"
@@ -89,6 +93,6 @@ export default function LoginScreen({ navigation }) {
             >
                 Sign In
             </Button>
-        </View>
+        </ScrollView>
     );
 }

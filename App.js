@@ -1,19 +1,19 @@
-import { 
-	PaperProvider,
-	MD3DarkTheme,
-	MD3LightTheme,
-	adaptNavigationTheme
-} from 'react-native-paper';
 import {
 	DarkTheme as NavigationDarkTheme,
 	DefaultTheme as NavigationDefaultTheme,
 } from '@react-navigation/native';
-import { StatusBar } from 'expo-status-bar';
-import NavigationRoot from './src/NavigationRoot';
 import merge from 'deepmerge';
+import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { useColorScheme } from 'react-native';
+import {
+	MD3DarkTheme,
+	MD3LightTheme,
+	PaperProvider,
+	adaptNavigationTheme
+} from 'react-native-paper';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import NavigationRoot from './src/NavigationRoot';
 
 const { LightTheme, DarkTheme } = adaptNavigationTheme({
 	reactNavigationLight: NavigationDefaultTheme,
