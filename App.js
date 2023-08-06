@@ -1,3 +1,4 @@
+import 'react-native-gesture-handler';
 import {
 	DarkTheme as NavigationDarkTheme,
 	DefaultTheme as NavigationDefaultTheme,
@@ -13,7 +14,7 @@ import {
 	adaptNavigationTheme
 } from 'react-native-paper';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import NavigationRoot from './src/NavigationRoot';
+import NavigationRoot from './src/navigation/NavigationRoot';
 
 const { LightTheme, DarkTheme } = adaptNavigationTheme({
 	reactNavigationLight: NavigationDefaultTheme,

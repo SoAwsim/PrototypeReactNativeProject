@@ -1,16 +1,19 @@
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { StyleSheet, View } from 'react-native';
-import { Text } from 'react-native-paper';
+import { Text, Button, Appbar } from 'react-native-paper';
 
-export default function DummyHome() {
+export default function DummyHome({ navigation }) {
     const insets = useSafeAreaInsets();
 
     return (
-        <View style={styles(insets).SafeAreaFlex}>
-            <Text>
-                This is the dummy home page
-            </Text>
-        </View>
+        <>
+            <Appbar.Header>
+                <Appbar.Action icon="menu" onPress={() => navigation.openDrawer()} />
+            </Appbar.Header>
+            <View style={styles(insets).SafeAreaFlex}>
+                <Text>This is the dummy home page</Text>
+            </View>
+        </>
     );
 }
 
