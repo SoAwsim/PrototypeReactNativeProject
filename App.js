@@ -1,4 +1,3 @@
-import 'react-native-gesture-handler';
 import {
 	NavigationContainer,
 	DarkTheme as NavigationDarkTheme,
@@ -8,6 +7,7 @@ import merge from 'deepmerge';
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { useColorScheme } from 'react-native';
+import 'react-native-gesture-handler';
 import {
 	MD3DarkTheme,
 	MD3LightTheme,
@@ -15,7 +15,7 @@ import {
 	adaptNavigationTheme
 } from 'react-native-paper';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import Authenticate from './src/navigation/AuthFlow';
+import AuthFlow from './src/navigation/AuthFlow';
 
 const { LightTheme, DarkTheme } = adaptNavigationTheme({
 	reactNavigationLight: NavigationDefaultTheme,
@@ -36,7 +36,7 @@ export default function App() {
 		<SafeAreaProvider>
 			<PaperProvider theme={theme}>
 				<NavigationContainer theme={theme}>
-					<Authenticate />
+					<AuthFlow />
 					<StatusBar style='auto'/>
 				</NavigationContainer>
 			</PaperProvider>

@@ -1,13 +1,14 @@
-import * as React from "react";
-import axios from "axios";
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import axios from "axios";
+import * as React from "react";
 import LoginScreen from '../screens/login/LoginScreen';
+import SplashScreen from "../screens/splash/SplashScreen";
 import { HomeNavigator } from './HomeDrawerNavigation';
 
 const AuthContext = React.createContext();
 const Stack = createNativeStackNavigator();
 
-export default function Authenticate() {
+export default function AuthFlow() {
     const [state, dispatch] = React.useReducer( // use secure tokens here in the future this is just a dummy implemenetation
         (prevState, action) => {
             switch (action.type) {
@@ -76,11 +77,16 @@ export default function Authenticate() {
         []
     );
 
+    if (state.isLoading) {
+        // app has not loaded the user token from storage yet
+        return <SplashScreen />;
+    }
+
     return (
         <AuthContext.Provider value={authContext}>
             <Stack.Navigator screenOptions={{ headerShown: false }}>
                 {state.userToken == null ? (
-                    <Stack.Screen name="Login">
+                    <Stack.Screen name="Login" options={{ animationTypeForReplace: state.isSignout ? 'pop' : 'push' }}>
                         {(props) => <LoginScreen {...props} AuthContext={AuthContext} isError={isError} />}
                     </Stack.Screen>
                 ) : (
