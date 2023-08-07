@@ -1,6 +1,7 @@
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { Text, View, useWindowDimensions } from "react-native";
 import DummyHome from "../screens/dummyhome/DummyHome";
+import SettingsScreen from "../screens/settings/SettingsScreen";
 
 const Drawer = createDrawerNavigator();
 
@@ -17,13 +18,21 @@ export const HomeNavigator = () => {
 
     return (
         <Drawer.Navigator 
-            initialRouteName="Home" 
+            initialRouteName="Home"
             screenOptions={{
                 headerShown: false,
-                swipeEdgeWidth: windowsWidth
+                swipeEdgeWidth: windowsWidth,
             }}
         >
-            <Drawer.Screen name="Home" component={DummyHome} />
+            <Drawer.Screen
+                name="Home"
+                component={DummyHome}
+            />
+            <Drawer.Screen
+                name="Settings"
+                component={SettingsScreen}
+                options={{ swipeEnabled: false }}
+            />
         </Drawer.Navigator>
     )
 }
