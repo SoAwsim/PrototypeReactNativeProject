@@ -52,16 +52,16 @@ export default function AuthFlow() {
             signIn: (loginInfo) => {
                 const loginAPI = "https://workbench.persystlab.org/api/login.php";
 
-                const promise = axios.post(loginAPI, {
+                axios.post(loginAPI, {
                     username: loginInfo.enteredEmail,
                     password: loginInfo.enteredPassword,
-                });
-
-                const data = promise.then(response => response.data);
-
-                data.then(
-                    answer => {
-                        if (answer.status === "success") {
+                })
+                .then(
+                    response => response
+                )
+                .then(
+                    ({ data }) => {
+                        if (data.status === "success") {
                             console.log("login success");
                             dispatch({ type: 'SIGN_IN', token: 'dummy-token' });
                         } else {
