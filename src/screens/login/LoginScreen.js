@@ -29,7 +29,7 @@ export default function LoginScreen(props) {
     };
 
     return (
-        <ScrollView contentContainerStyle={loginStyle(insets).SafeAreaFlex}>
+        <ScrollView keyboardShouldPersistTaps='handled' contentContainerStyle={loginStyle(insets).SafeAreaFlex}>
             <TextInput
                 mode="outlined"
                 label="Enter your email"
