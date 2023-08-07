@@ -1,6 +1,6 @@
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { StyleSheet, View } from 'react-native';
-import { Text, Button, Appbar } from 'react-native-paper';
+import { Text, Appbar } from 'react-native-paper';
 
 export default function DummyHome({ navigation }) {
     const insets = useSafeAreaInsets();

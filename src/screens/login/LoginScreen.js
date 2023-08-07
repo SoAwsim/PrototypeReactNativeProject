@@ -1,58 +1,31 @@
-import axios from "axios";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { ScrollView } from 'react-native';
 import { Button, TextInput } from "react-native-paper";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { loginStyle } from "./LoginStyle";
 
-export default function LoginScreen({ navigation }) {
+export default function LoginScreen(props) {
     const insets = useSafeAreaInsets();
 
     const [enteredEmail, setEnteredEmail] = useState('');
     const [enteredPassword, setEnteredPassword] = useState('');
-    const [isError, setError] = useState(false);
 
-    const loginUser = (username, password) => {
-        const loginAPI = "https://workbench.persystlab.org/api/login.php";
-
-        const promise = axios.post(loginAPI, {
-            username: username,
-            password: password,
-        });
-
-        const data = promise.then(response => response.data);
-
-        return data;
-    };
+    const { signIn, updateIsError } = useContext(props.AuthContext);
 
     function emailInputHandler(enteredEmail) {
         setEnteredEmail(enteredEmail);
-        setError(false);
+        updateIsError();
     };
 
     function passwordInputHandler(enteredPassword) {
         setEnteredPassword(enteredPassword);
-        setError(false);
+        updateIsError();
     };
 
     function signInHandler() {
         console.log("Email: " + enteredEmail + "\nPassword: " + enteredPassword);
 
-        loginUser(enteredEmail, enteredPassword).then(
-            data => { // add UI notification TODO
-                if (data.status === "success") {
-                    console.log("login");
-                    navigation.reset({
-                        index: 0,
-                        routes: [{ name: 'DummyHome' }],
-                    });
-                } else {
-                    console.log("fail");
-                    setError(true);
-                }
-            },
-            err => console.log(err)
-        );
+        signIn({ enteredEmail, enteredPassword });
     };
 
     return (
@@ -65,7 +38,7 @@ export default function LoginScreen({ navigation }) {
                 onChangeText={emailInputHandler}
                 autoCapitalize="none"
                 autoComplete="email"
-                error={isError}
+                error={props.isError}
                 keyboardType="email-address"
                 returnKeyType="next"
                 blurOnSubmit={false}
@@ -81,7 +54,7 @@ export default function LoginScreen({ navigation }) {
                 textContentType="password" // IOS 11+ password keychain support
                 autoComplete="current-password"
                 secureTextEntry={true}
-                error={isError}
+                error={props.isError}
                 returnKeyType="send"
                 onSubmitEditing={() => signInHandler()}
                 style={loginStyle(insets).TextInput}

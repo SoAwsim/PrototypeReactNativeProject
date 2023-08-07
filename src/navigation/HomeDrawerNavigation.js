@@ -12,8 +12,6 @@ function HomeDrawerContent() {
     )
 }
 
-
-
 export const HomeNavigator = () => {
     const windowsWidth = useWindowDimensions().width;
 
