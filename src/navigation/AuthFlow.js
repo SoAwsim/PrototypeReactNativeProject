@@ -57,9 +57,6 @@ export default function AuthFlow() {
                     password: loginInfo.enteredPassword,
                 })
                 .then(
-                    response => response
-                )
-                .then(
                     ({ data }) => {
                         if (data.status === "success") {
                             console.log("login success");
@@ -68,9 +65,10 @@ export default function AuthFlow() {
                             setIsError(true);
                             console.log("login failed");
                         }
-                    },
+                    }
+                ).catch(
                     err => console.log(err)
-                );
+                )
             },
             signOut: () => dispatch({ type: 'SIGN_OUT' }),
         }),
