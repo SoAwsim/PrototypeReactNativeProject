@@ -4,6 +4,7 @@ import * as React from "react";
 import LoginScreen from '../screens/login/LoginScreen';
 import SplashScreen from "../screens/splash/SplashScreen";
 import { HomeNavigator } from './HomeDrawerNavigation';
+import { config } from '../../Config';
 
 const AuthContext = React.createContext();
 const Stack = createNativeStackNavigator();
@@ -52,24 +53,42 @@ export default function AuthFlow() {
             signIn: (loginInfo) => {
                 const loginAPI = "https://workbench.persystlab.org/api/login.php";
 
-                axios.post(loginAPI, {
-                    username: loginInfo.enteredEmail,
-                    password: loginInfo.enteredPassword,
-                })
-                .then(
-                    ({ data }) => {
-                        if (data.status === "success") {
-                            console.log("login success");
-                            dispatch({ type: 'SIGN_IN', token: 'dummy-token' });
-                        } else {
-                            setIsError(true);
-                            console.log("login failed");
+                try {
+                    axios.post(loginAPI, {
+                        username: loginInfo.enteredEmail,
+                        password: loginInfo.enteredPassword,
+                        apiKey: config.API_KEY,
+                    })
+                    .then(
+                        ({ data }) => {
+                            console.log(data);
+                            if (data.status === "success") {
+                                console.log("login success");
+                                dispatch({ type: 'SIGN_IN', token: 'dummy-token' });
+                            } else {
+                                setIsError(true);
+                                console.log("login failed");
+                            }
                         }
+                    )
+                    .catch(
+                        err => console.log(err)
+                    )
+                } catch (error) {
+                    if (error instanceof TypeError) {
+                        if (error.message.includes("API_KEY")) {
+                            console.warn(
+                                "API_KEY is missing or not named and located properly." +
+                                "Please check the README for further instructions.");
+                        } else {
+                            console.warn("A TypeError occurred inside the signIn function." + 
+                            "If you have changed the naming of the API_KEY please also update the corresponding locations described in the README.");
+                            throw error;
+                        }
+                    } else {
+                        throw error;
                     }
-                )
-                .catch(
-                    err => console.log(err)
-                )
+                }
             },
             signOut: () => dispatch({ type: 'SIGN_OUT' }),
         }),
