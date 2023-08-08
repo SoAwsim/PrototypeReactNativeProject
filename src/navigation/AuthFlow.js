@@ -66,7 +66,8 @@ export default function AuthFlow() {
                             console.log("login failed");
                         }
                     }
-                ).catch(
+                )
+                .catch(
                     err => console.log(err)
                 )
             },
