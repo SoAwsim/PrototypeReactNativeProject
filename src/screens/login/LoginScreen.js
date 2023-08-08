@@ -37,6 +37,7 @@ export default function LoginScreen(props) {
                 value={enteredEmail}
                 onChangeText={emailInputHandler}
                 autoCapitalize="none"
+                textContentType="emailAddress"
                 autoComplete="email"
                 error={props.isError}
                 keyboardType="email-address"
