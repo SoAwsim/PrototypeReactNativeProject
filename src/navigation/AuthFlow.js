@@ -5,8 +5,8 @@ import LoginScreen from '../screens/login/LoginScreen';
 import SplashScreen from "../screens/splash/SplashScreen";
 import { HomeNavigator } from './HomeDrawerNavigation';
 import { config } from '../../Config';
+import { AuthContext } from '../context/AuthContext';
 
-const AuthContext = React.createContext();
 const Stack = createNativeStackNavigator();
 
 export default function AuthFlow() {
@@ -105,7 +105,7 @@ export default function AuthFlow() {
             <Stack.Navigator screenOptions={{ headerShown: false }}>
                 {state.userToken == null ? (
                     <Stack.Screen name="Login" options={{ animationTypeForReplace: state.isSignout ? 'pop' : 'push' }}>
-                        {(props) => <LoginScreen {...props} AuthContext={AuthContext} isError={isError} />}
+                        {props => <LoginScreen {...props} isError={isError} />}
                     </Stack.Screen>
                 ) : (
                     <Stack.Screen name="DummyHome" component={HomeNavigator} />

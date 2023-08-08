@@ -3,6 +3,7 @@ import { ScrollView } from 'react-native';
 import { Button, TextInput } from "react-native-paper";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { loginStyle } from "./LoginStyle";
+import { AuthContext } from "../../context/AuthContext";
 
 export default function LoginScreen(props) {
     const insets = useSafeAreaInsets();
@@ -10,7 +11,7 @@ export default function LoginScreen(props) {
     const [enteredEmail, setEnteredEmail] = useState('');
     const [enteredPassword, setEnteredPassword] = useState('');
 
-    const { signIn, updateIsError } = useContext(props.AuthContext);
+    const { signIn, updateIsError } = useContext(AuthContext);
 
     function emailInputHandler(enteredEmail) {
         setEnteredEmail(enteredEmail);
