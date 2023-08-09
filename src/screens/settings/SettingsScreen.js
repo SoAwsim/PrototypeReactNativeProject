@@ -4,7 +4,7 @@ import { Appbar, Text, TouchableRipple, Portal, Dialog } from "react-native-pape
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { SettingsStyle } from "./SettingsScreenStyle";
 import ThemeDialog from "./ThemeDialog";
-import { ThemeContext } from "../../context/ThemeContext";
+import { ThemeContext } from "../../context/AppContextProvider";
 
 export default function SettingsScreen({ navigation }) {
     const insets = useSafeAreaInsets();

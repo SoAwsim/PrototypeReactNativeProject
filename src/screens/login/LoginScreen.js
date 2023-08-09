@@ -3,24 +3,24 @@ import { ScrollView } from 'react-native';
 import { Button, TextInput } from "react-native-paper";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { loginStyle } from "./LoginStyle";
-import { AuthContext } from "../../context/AuthContext";
+import { AuthContext } from "../../context/AppContextProvider";
 
-export default function LoginScreen(props) {
+export default function LoginScreen() {
     const insets = useSafeAreaInsets();
 
     const [enteredEmail, setEnteredEmail] = useState('');
     const [enteredPassword, setEnteredPassword] = useState('');
 
-    const { signIn, updateIsError } = useContext(AuthContext);
+    const { signIn, isError, setIsError } = useContext(AuthContext);
 
     function emailInputHandler(enteredEmail) {
         setEnteredEmail(enteredEmail);
-        updateIsError();
+        setIsError(false);
     };
 
     function passwordInputHandler(enteredPassword) {
         setEnteredPassword(enteredPassword);
-        updateIsError();
+        setIsError(false);
     };
 
     function signInHandler() {
@@ -40,7 +40,7 @@ export default function LoginScreen(props) {
                 autoCapitalize="none"
                 textContentType="emailAddress"
                 autoComplete="email"
-                error={props.isError}
+                error={isError}
                 keyboardType="email-address"
                 returnKeyType="next"
                 blurOnSubmit={false}
@@ -56,7 +56,7 @@ export default function LoginScreen(props) {
                 textContentType="password" // IOS 11+ password keychain support
                 autoComplete="current-password"
                 secureTextEntry={true}
-                error={props.isError}
+                error={isError}
                 returnKeyType="send"
                 onSubmitEditing={() => signInHandler()}
                 style={loginStyle(insets).TextInput}

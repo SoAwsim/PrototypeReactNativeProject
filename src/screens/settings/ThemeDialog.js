@@ -1,7 +1,7 @@
 import { Button, Dialog, RadioButton, Text } from "react-native-paper";
 import { useState, useContext } from "react";
 import { View, Pressable } from "react-native";
-import { ThemeContext } from "../../context/ThemeContext";
+import { ThemeContext } from "../../context/AppContextProvider";
 
 export default function ThemeDialog({ visible, hideDialog }) {
     const { currentTheme, changeTheme } = useContext(ThemeContext);

@@ -4,7 +4,7 @@ import { View, useWindowDimensions } from "react-native";
 import { Drawer } from "react-native-paper";
 import DummyHome from "../screens/dummyhome/DummyHome";
 import SettingsScreen from "../screens/settings/SettingsScreen";
-import { AuthContext } from "../context/AuthContext";
+import { AuthContext } from "../context/AppContextProvider";
 
 const DrawerNavigation = createDrawerNavigator();
 
