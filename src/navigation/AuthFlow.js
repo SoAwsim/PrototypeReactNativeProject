@@ -53,13 +53,13 @@ export default function AuthFlow() {
     // value for the AuthContext
     const authContext = React.useMemo(
         () => ({
-            signIn: (loginInfo) => {
+            signIn: ({ enteredUsername, enteredPassword }) => {
                 const loginAPI = "https://workbench.persystlab.org/api/login.php";
 
                 try {
                     axios.post(loginAPI, {
-                        username: loginInfo.enteredEmail,
-                        password: loginInfo.enteredPassword,
+                        username: enteredUsername,
+                        password: enteredPassword,
                         apiKey: config.API_KEY,
                     })
                     .then(

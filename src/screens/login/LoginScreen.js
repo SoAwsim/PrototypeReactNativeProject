@@ -8,40 +8,40 @@ import { AuthContext } from "../../context/AppContextProvider";
 export default function LoginScreen() {
     const insets = useSafeAreaInsets();
 
-    const [enteredEmail, setEnteredEmail] = useState('');
+    const [enteredUsername, setEnteredUsername] = useState('');
     const [enteredPassword, setEnteredPassword] = useState('');
 
     const { signIn, isError, setIsError } = useContext(AuthContext);
 
-    function emailInputHandler(enteredEmail) {
-        setEnteredEmail(enteredEmail);
-        setIsError(false);
+    function usernameInputHandler(enteredUsername) {
+        setEnteredUsername(enteredUsername);
+        setIsError(false); // clear error state when anything is typed
     };
 
     function passwordInputHandler(enteredPassword) {
         setEnteredPassword(enteredPassword);
-        setIsError(false);
+        setIsError(false); // clear error state when anything is typed
     };
 
     function signInHandler() {
-        console.log("Email: " + enteredEmail + "\nPassword: " + enteredPassword);
+        console.log("Username: " + enteredUsername + "\nPassword: " + enteredPassword); // for debugging proposes remove later
 
-        signIn({ enteredEmail, enteredPassword });
+        signIn({ enteredUsername, enteredPassword }); // use singIn function from AuthContext
     };
 
     return (
         <ScrollView keyboardShouldPersistTaps='handled' contentContainerStyle={loginStyle(insets).SafeAreaFlex}>
             <TextInput
                 mode="outlined"
-                label="Enter your email"
-                placeholder="example@example.com"
-                value={enteredEmail}
-                onChangeText={emailInputHandler}
+                label="Enter your username"
+                placeholder="exampleusername"
+                value={enteredUsername}
+                onChangeText={usernameInputHandler}
                 autoCapitalize="none"
-                textContentType="emailAddress"
-                autoComplete="email"
+                textContentType="username" // IOS 11+ keychain support
+                autoComplete="username"
                 error={isError}
-                keyboardType="email-address"
+                keyboardType="default"
                 returnKeyType="next"
                 blurOnSubmit={false}
                 onSubmitEditing={() => this.passwordInput.focus()}
@@ -53,7 +53,7 @@ export default function LoginScreen() {
                 label="Enter your password"
                 value={enteredPassword}
                 onChangeText={passwordInputHandler}
-                textContentType="password" // IOS 11+ password keychain support
+                textContentType="password" // IOS 11+ keychain support
                 autoComplete="current-password"
                 secureTextEntry={true}
                 error={isError}
