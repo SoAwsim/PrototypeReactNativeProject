@@ -16,6 +16,8 @@ import {
 } from 'react-native-paper';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import AuthFlow from './src/navigation/AuthFlow';
+import { ThemeContext } from './src/context/ThemeContext';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const { LightTheme, DarkTheme } = adaptNavigationTheme({
 	reactNavigationLight: NavigationDefaultTheme,
@@ -26,20 +28,71 @@ const CombinedDefaultTheme = merge(MD3LightTheme, LightTheme);
 const CombinedDarkTheme = merge(MD3DarkTheme, DarkTheme);
 
 export default function App() {
+	const [currentTheme, setCurrentTheme] = React.useState("system");
+
+	React.useEffect(() => {
+		AsyncStorage.getItem('app-theme')
+        .then(
+            value => {
+				console.log(value)
+                if (value !== null) {
+                    setCurrentTheme(value);
+                }
+            }
+        )
+        .catch(
+            err => console.log(err)
+        )
+	}, [])
 
 	const colorScheme = useColorScheme();
-	const isThemeDark = colorScheme === 'dark';
+
+	let isThemeDark;
+
+	switch (currentTheme) {
+		case 'system':
+			isThemeDark = colorScheme === 'dark'
+			break;
+		case 'light':
+			isThemeDark = false;
+			break;
+		case 'dark':
+			isThemeDark = true;
+			break;
+	};
+
+	const preferences = React.useMemo(
+		() => ({
+			changeTheme: theme => {
+				setCurrentTheme(theme);
+				AsyncStorage.setItem('app-theme', theme)
+				.then(
+					() => console.log("Theme saved")
+				)
+				.catch(
+					err => console.log(err)
+				)
+			},
+			currentTheme
+		}),
+		[currentTheme]
+	);
+
+	//const colorScheme = useColorScheme();
+	//const isThemeDark = colorScheme === 'dark';
 
 	let theme = isThemeDark ? CombinedDarkTheme : CombinedDefaultTheme;
 
 	return (
-		<SafeAreaProvider>
-			<PaperProvider theme={theme}>
-				<NavigationContainer theme={theme}>
-					<AuthFlow />
-					<StatusBar style='auto'/>
-				</NavigationContainer>
-			</PaperProvider>
-		</SafeAreaProvider>
+		<ThemeContext.Provider value={preferences}>
+			<SafeAreaProvider>
+				<PaperProvider theme={theme}>
+					<NavigationContainer theme={theme}>
+						<AuthFlow />
+						<StatusBar style='auto'/>
+					</NavigationContainer>
+				</PaperProvider>
+			</SafeAreaProvider>
+		</ThemeContext.Provider>
 	);
 }
