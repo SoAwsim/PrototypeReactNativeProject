@@ -1,6 +1,6 @@
 import { View, ScrollView, StyleSheet } from "react-native";
 import { useState, useContext } from "react";
-import { Appbar, Text, TouchableRipple, Portal, Dialog } from "react-native-paper";
+import { Appbar, Text, TouchableRipple, Portal } from "react-native-paper";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import ThemeDialog from "./ThemeDialog";
 import { ThemeContext } from "../../context/AppContextProvider";
