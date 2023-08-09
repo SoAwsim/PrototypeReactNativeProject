@@ -3,7 +3,7 @@ import axios from "axios";
 import * as React from "react";
 import LoginScreen from '../screens/login/LoginScreen';
 import SplashScreen from "../screens/splash/SplashScreen";
-import { HomeNavigator } from './HomeDrawerNavigation';
+import HomeStack from './HomeDrawerNavigation';
 import { config } from '../../Config';
 import { AuthContext } from '../context/AppContextProvider';
 
@@ -117,7 +117,7 @@ export default function AuthFlow() {
                 ) : (
                     <Stack.Screen
                         name="DummyHome"
-                        component={HomeNavigator}
+                        component={HomeStack}
                     />
                 )}
             </Stack.Navigator>

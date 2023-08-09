@@ -5,15 +5,15 @@ import { Drawer } from "react-native-paper";
 import DummyHome from "../screens/dummyhome/DummyHome";
 import SettingsScreen from "../screens/settings/SettingsScreen";
 import { AuthContext } from "../context/AppContextProvider";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 const DrawerNavigation = createDrawerNavigator();
 
 function HomeDrawerContent(props) {
-    const state = props.navigation.getState();
+    /*const drawerState = props.navigation.getState();
     const drawerIcons = [
-        {focus: 'home', unfocus: 'home-outline'},
-        {focus: 'cog', unfocus: 'cog-outline'}
-    ]
+        {focus: 'home', unfocus: 'home-outline'}
+    ];*/
 
     const { signOut } = useContext(AuthContext);
 
@@ -21,8 +21,8 @@ function HomeDrawerContent(props) {
         <DrawerContentScrollView {...props}>
             <View style={{ flex: 1 }}>
                 <Drawer.Section>
-                    {state.routes.map((route, i) => {
-                        const focused = i === state.index;
+                    {/*drawerState.routes.map((route, i) => {
+                        const focused = i === drawerState.index;
 
                         return (
                             <Drawer.Item
@@ -32,8 +32,16 @@ function HomeDrawerContent(props) {
                                 active={focused}
                                 onPress={() => props.navigation.navigate(route.name)}
                             />
-                        )
-                    })}
+                        );
+                    })*/}
+                    <Drawer.Item
+                        label="Settings"
+                        icon="cog-outline"
+                        onPress={() => {
+                            props.navigation.closeDrawer();
+                            props.stackNavigation.navigate('Settings');
+                        }}
+                    />
                 </Drawer.Section>
                 <Drawer.Section>
                     <Drawer.Item
@@ -48,7 +56,7 @@ function HomeDrawerContent(props) {
     )
 }
 
-export const HomeNavigator = () => {
+function HomeNavigator({ navigation }) {
     const windowsWidth = useWindowDimensions().width;
 
     return (
@@ -58,17 +66,30 @@ export const HomeNavigator = () => {
                 headerShown: false,
                 swipeEdgeWidth: windowsWidth,
             }}
-            drawerContent={HomeDrawerContent}
+            drawerContent={(props) => <HomeDrawerContent {...props} stackNavigation={navigation} />}
         >
             <DrawerNavigation.Screen
                 name="Home"
                 component={DummyHome}
             />
-            <DrawerNavigation.Screen
-                name="Settings"
-                component={SettingsScreen}
-                options={{ swipeEnabled: false }}
-            />
         </DrawerNavigation.Navigator>
     )
+}
+
+const Stack = createNativeStackNavigator();
+export default function HomeStack() {
+    return (
+        <Stack.Navigator
+            screenOptions={{ headerShown: false }}
+        >
+            <Stack.Screen
+                name="HomeStack"
+                component={HomeNavigator}
+            />
+            <Stack.Screen
+                name="Settings"
+                component={SettingsScreen}
+            />
+        </Stack.Navigator>
+    );
 }
