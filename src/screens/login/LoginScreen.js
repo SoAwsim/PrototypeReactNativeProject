@@ -1,12 +1,12 @@
 import { useState, useContext } from "react";
-import { ScrollView } from 'react-native';
+import { ScrollView, StyleSheet } from 'react-native';
 import { Button, TextInput } from "react-native-paper";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { loginStyle } from "./LoginStyle";
 import { AuthContext } from "../../context/AppContextProvider";
 
 export default function LoginScreen() {
-    const insets = useSafeAreaInsets();
+    const insets = useSafeAreaInsets(); // safe area paddings
+    const style = loginStyle(insets);
 
     const [enteredUsername, setEnteredUsername] = useState('');
     const [enteredPassword, setEnteredPassword] = useState('');
@@ -30,7 +30,7 @@ export default function LoginScreen() {
     };
 
     return (
-        <ScrollView keyboardShouldPersistTaps='handled' contentContainerStyle={loginStyle(insets).SafeAreaFlex}>
+        <ScrollView keyboardShouldPersistTaps='handled' contentContainerStyle={style.SafeAreaFlex}>
             <TextInput
                 mode="outlined"
                 label="Enter your username"
@@ -45,7 +45,7 @@ export default function LoginScreen() {
                 returnKeyType="next"
                 blurOnSubmit={false}
                 onSubmitEditing={() => this.passwordInput.focus()}
-                style={loginStyle(insets).TextInput}
+                style={style.TextInput}
             />
             <TextInput
                 ref={input => this.passwordInput = input}
@@ -59,15 +59,37 @@ export default function LoginScreen() {
                 error={isError}
                 returnKeyType="send"
                 onSubmitEditing={() => signInHandler()}
-                style={loginStyle(insets).TextInput}
+                style={style.TextInput}
             />
             <Button
                 mode="contained"
                 onPress={signInHandler}
-                style={loginStyle(insets).SignInButton}
+                style={style.SignInButton}
             >
                 Sign In
             </Button>
         </ScrollView>
     );
 }
+
+const loginStyle = props => StyleSheet.create({
+    SafeAreaFlex: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingTop: props.top,
+        paddingBottom: props.bottom,
+        paddingLeft: props.left,
+        paddingRight: props.right
+    },
+
+    TextInput: {
+        width: '95%',
+        margin: 10
+    },
+
+    SignInButton: {
+        margin: 40,
+        width: '75%'
+    }
+});
