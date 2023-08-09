@@ -1,29 +1,15 @@
 import { Button, Dialog, RadioButton, Text } from "react-native-paper";
 import { useState, useContext } from "react";
-import { View, Pressable } from "react-native";
+import { View, Pressable, StyleSheet } from "react-native";
 import { ThemeContext } from "../../context/AppContextProvider";
 
 export default function ThemeDialog({ visible, hideDialog }) {
     const { currentTheme, changeTheme } = useContext(ThemeContext);
+    const [checked, setChecked] = useState(currentTheme);
 
-    const selectedIndex = currentTheme === 'system' ? '2' : currentTheme === 'dark' ? '1' : '0';
-    const [checked, setChecked] = useState(selectedIndex);
-
-    function selectButton(buttonIndex) {
-        setChecked(buttonIndex);
-        switch (buttonIndex) {
-            case '0':
-                changeTheme('light');
-                break;
-            case '1':
-                changeTheme('dark');
-                break;
-            case '2':
-                changeTheme('system');
-                break;
-            default:
-                break;
-        }
+    function selectButton(selectedTheme) {
+        setChecked(selectedTheme);
+        changeTheme(selectedTheme);
         hideDialog();
     }
 
@@ -31,32 +17,32 @@ export default function ThemeDialog({ visible, hideDialog }) {
         <Dialog visible={visible} onDismiss={hideDialog}>
             <Dialog.Title>Choose your desired theme</Dialog.Title>
             <Dialog.Content>
-                <Pressable onPress={() => selectButton('0')}>
-                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <Pressable onPress={() => selectButton('light')}>
+                    <View style={ThemeDialogStyle.RadioElement}>
                         <RadioButton
-                            value="0"
-                            status={ checked === '0' ? 'checked' : 'unchecked' }
-                            onPress={() => selectButton('0')}
+                            value="light"
+                            status={ checked === 'light' ? 'checked' : 'unchecked' }
+                            onPress={() => selectButton('light')}
                         />
                         <Text variant="titleMedium">Light</Text>
                     </View>
                 </Pressable>
-                <Pressable onPress={() => selectButton('1')}>
-                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <Pressable onPress={() => selectButton('dark')}>
+                    <View style={ThemeDialogStyle.RadioElement}>
                         <RadioButton
-                            value="1"
-                            status={ checked === '1' ? 'checked' : 'unchecked' }
-                            onPress={() => selectButton('1')}
+                            value="dark"
+                            status={ checked === 'dark' ? 'checked' : 'unchecked' }
+                            onPress={() => selectButton('dark')}
                         />
                         <Text variant="titleMedium">Dark</Text>
                     </View>
                 </Pressable>
-                <Pressable onPress={() => selectButton('2')}>
-                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <Pressable onPress={() => selectButton('system')}>
+                    <View style={ThemeDialogStyle.RadioElement}>
                         <RadioButton
-                            value="2"
-                            status={ checked === '2' ? 'checked' : 'unchecked' }
-                            onPress={() => selectButton('2')}
+                            value="system"
+                            status={ checked === 'system' ? 'checked' : 'unchecked' }
+                            onPress={() => selectButton('system')}
                         />
                         <Text variant="titleMedium">System Default</Text>
                     </View>
@@ -68,3 +54,10 @@ export default function ThemeDialog({ visible, hideDialog }) {
         </Dialog>
     );
 }
+
+const ThemeDialogStyle = StyleSheet.create({
+    RadioElement: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    }
+})
