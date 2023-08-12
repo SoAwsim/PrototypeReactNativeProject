@@ -6,7 +6,12 @@ import {
 } from "@react-navigation/native";
 import merge from "deepmerge";
 import { StatusBar } from "expo-status-bar";
-import * as React from "react";
+import {
+    createContext,
+    useEffect,
+    useMemo,
+    useState
+} from "react";
 import { useColorScheme } from "react-native";
 import {
     MD3DarkTheme,
@@ -17,8 +22,7 @@ import {
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
 // Custom contexts used through out the app
-export const ThemeContext = React.createContext(); // used for getting and setting the theme
-export const AuthContext = React.createContext(); // used for managing the authentication flow
+export const ThemeContext = createContext(); // used for getting and setting the theme
 
 // Build a combined theme for react-navigation and react-native-paper components
 function BuildCombinedTheme() {
@@ -33,31 +37,18 @@ function BuildCombinedTheme() {
     return {CombinedDefaultTheme, CombinedDarkTheme};
 }
 
+const combinedTheme = BuildCombinedTheme();
+
 // provides required contexts for the child components
 export default function AppContextProvider({ children }) {
-    const [currentTheme, setCurrentTheme] = React.useState("system");
-
-    // try to load user selected theme from storage, if non existent or failed return back to default 'system'
-    React.useEffect(() => {
-		AsyncStorage.getItem('app-theme')
-        .then(
-            value => {
-                if (value !== null) {
-                    setCurrentTheme(value);
-                }
-            }
-        )
-        .catch(
-            err => console.log(err)
-        )
-	}, [])
-
+    const [currentTheme, setCurrentTheme] = useState('system');
+    
     // provides hook for accessing the system theme
     const systemColorScheme = useColorScheme();
 
     // decide if theme should be dark or not
-    const isThemeDark = theme => {
-        switch (theme) {
+    const isThemeDark = () => {
+        switch (currentTheme) {
             case 'system':
                 return (systemColorScheme === 'dark');
             case 'light':
@@ -67,33 +58,46 @@ export default function AppContextProvider({ children }) {
         }
     }
 
+    // try to load user selected theme from storage, if non existent or failed return back to default 'system'
+    useEffect(() => {
+		AsyncStorage.getItem('app-theme')
+        .then(
+            storageTheme => {
+                if (storageTheme !== null) {
+                    setCurrentTheme(storageTheme);
+                }
+            }
+        )
+        .catch(
+            err => console.log(err)
+        )
+	}, [])
+
     // value for ThemeContext
-    const preferences = React.useMemo(
+    const preferences = useMemo(
 		() => ({
 			changeTheme: theme => { // used for chaning and storing the selected theme
-				setCurrentTheme(theme);
 				AsyncStorage.setItem('app-theme', theme)
 				.catch(
 					err => console.log(err)
 				)
+                setCurrentTheme(theme);
 			},
 			currentTheme // used for accessing the current theme
 		}),
 		[currentTheme]
 	);
 
-    const combinedTheme = BuildCombinedTheme();
-
     // the theme that will be used throughout the app
-    const theme = isThemeDark(currentTheme) ? combinedTheme.CombinedDarkTheme : combinedTheme.CombinedDefaultTheme;
+    const theme = isThemeDark() ? {appTheme: combinedTheme.CombinedDarkTheme, statusBar: 'light'} : {appTheme: combinedTheme.CombinedDefaultTheme, statusBar: 'dark'};
 
     return (
         <ThemeContext.Provider value={preferences}>
             <SafeAreaProvider>
-                <PaperProvider theme={theme}>
-                    <NavigationContainer theme={theme}>
+                <PaperProvider theme={theme.appTheme}>
+                    <NavigationContainer theme={theme.appTheme}>
                         {children}
-                        <StatusBar style='auto'/>
+                        <StatusBar style={theme.statusBar} />
                     </NavigationContainer>
                 </PaperProvider>
             </SafeAreaProvider>

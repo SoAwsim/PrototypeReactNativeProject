@@ -5,7 +5,7 @@ import LoginScreen from '../screens/login/LoginScreen';
 import SplashScreen from "../screens/splash/SplashScreen";
 import HomeStack from './HomeDrawerNavigation';
 import { config } from '../../Config';
-import { AuthContext } from '../context/AppContextProvider';
+import { AuthContext } from '../context/AuthContext';
 
 const Stack = createNativeStackNavigator();
 
