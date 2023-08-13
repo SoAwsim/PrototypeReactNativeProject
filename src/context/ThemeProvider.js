@@ -40,7 +40,7 @@ function BuildCombinedTheme() {
 const combinedTheme = BuildCombinedTheme();
 
 // provides required contexts for the child components
-export default function AppContextProvider({ children }) {
+export default function ThemeProvider({ children }) {
     const [currentTheme, setCurrentTheme] = useState('system');
     
     // provides hook for accessing the system theme
