@@ -1,42 +1,25 @@
 import { createDrawerNavigator, DrawerContentScrollView } from "@react-navigation/drawer";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useContext } from "react";
-import { View, useWindowDimensions } from "react-native";
+import { useWindowDimensions, View } from "react-native";
 import { Drawer } from "react-native-paper";
+import { AuthContext, LocaleContext } from "../context/AppContext";
+import i18n from "../localization/i18n";
 import DummyHome from "../screens/dummyhome/DummyHome";
 import SettingsScreen from "../screens/settings/SettingsScreen";
-import { AuthContext } from "../context/AuthContext";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import i18n from "../localization/i18n";
 
 const DrawerNavigation = createDrawerNavigator();
 
 function HomeDrawerContent(props) {
-    /*const drawerState = props.navigation.getState();
-    const drawerIcons = [
-        {focus: 'home', unfocus: 'home-outline'}
-    ];*/
-
     const { signOut } = useContext(AuthContext);
+    const { displayLang } = useContext(LocaleContext);
 
     return (
         <DrawerContentScrollView {...props}>
             <View style={{ flex: 1 }}>
                 <Drawer.Section>
-                    {/*drawerState.routes.map((route, i) => {
-                        const focused = i === drawerState.index;
-
-                        return (
-                            <Drawer.Item
-                                key={route.key}
-                                label={route.name}
-                                icon={focused ? drawerIcons[i].focus : drawerIcons[i].unfocus}
-                                active={focused}
-                                onPress={() => props.navigation.navigate(route.name)}
-                            />
-                        );
-                    })*/}
                     <Drawer.Item
-                        label={i18n.t('dummyHomeScreen.homeDrawer.settings')}
+                        label={i18n.t('dummyHomeScreen.homeDrawer.settings', { locale: displayLang })}
                         icon="cog-outline"
                         onPress={() => {
                             props.navigation.closeDrawer();
@@ -46,7 +29,7 @@ function HomeDrawerContent(props) {
                 </Drawer.Section>
                 <Drawer.Section>
                     <Drawer.Item
-                        label={i18n.t('dummyHomeScreen.homeDrawer.signOut')}
+                        label={i18n.t('dummyHomeScreen.homeDrawer.signOut', { locale: displayLang })}
                         icon='logout'
                         active={false}
                         onPress={() => signOut()}

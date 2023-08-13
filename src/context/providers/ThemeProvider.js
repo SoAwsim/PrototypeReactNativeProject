@@ -7,7 +7,6 @@ import {
 import merge from "deepmerge";
 import { StatusBar } from "expo-status-bar";
 import {
-    createContext,
     useEffect,
     useMemo,
     useState
@@ -20,9 +19,7 @@ import {
     adaptNavigationTheme,
 } from "react-native-paper";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-
-// Custom contexts used through out the app
-export const ThemeContext = createContext(); // used for getting and setting the theme
+import { ThemeContext } from "../AppContext";
 
 // Build a combined theme for react-navigation and react-native-paper components
 function BuildCombinedTheme() {

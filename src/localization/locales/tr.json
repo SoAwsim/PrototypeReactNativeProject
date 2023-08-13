@@ -1,4 +1,5 @@
 {
+    "lang": "Türkçe",
     "loginScreen": {
         "usernameField": {
             "label": "Kullanıcı Adınızı Giriniz",
@@ -18,18 +19,20 @@
     },
     "settingsScreen": {
         "appBarTitle": "Ayarlar",
+        "cancel": "İptal",
         "sectionApp": {
             "title": "Uygulama",
-            "theme": "Tema"
+            "theme": "Tema",
+            "lang": "Dil"
         },
         "themeText": {
             "system": "Sistem Varsayılanı",
             "light": "Açık",
             "dark": "Koyu"
         },
-        "themeDialog": {
-            "title": "İstediğiniz Temayı Seçiniz",
-            "cancel": "İptal"
+        "langDialog": {
+            "langWarn": "Sistemin varsayılan dili bu uygulama tarafından desteklenmiyor.",
+            "sysLang": "Sistemin Dilini Kullan"
         }
     }
 }

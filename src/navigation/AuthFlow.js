@@ -1,11 +1,11 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import axios from "axios";
 import * as React from "react";
+import { config } from '../../Config';
+import { AuthContext } from '../context/AppContext';
 import LoginScreen from '../screens/login/LoginScreen';
 import SplashScreen from "../screens/splash/SplashScreen";
 import HomeStack from './HomeDrawerNavigation';
-import { config } from '../../Config';
-import { AuthContext } from '../context/AuthContext';
 
 const Stack = createNativeStackNavigator();
 
@@ -64,7 +64,6 @@ export default function AuthFlow() {
                     })
                     .then(
                         ({ data }) => {
-                            console.log(data);
                             if (data.status === "success") {
                                 console.log("login success");
                                 dispatch({ type: 'SIGN_IN', token: 'dummy-token' });

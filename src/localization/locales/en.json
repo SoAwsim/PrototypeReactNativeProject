@@ -1,4 +1,5 @@
 {
+    "lang": "English",
     "loginScreen": {
         "usernameField": {
             "label": "Enter your username",
@@ -18,18 +19,20 @@
     },
     "settingsScreen": {
         "appBarTitle": "Settings",
+        "cancel": "Cancel",
         "sectionApp": {
             "title": "App",
-            "theme": "Theme"
+            "theme": "Theme",
+            "lang": "Language"
         },
         "themeText": {
             "system": "System Default",
             "light": "Light",
             "dark": "Dark"
         },
-        "themeDialog": {
-            "title": "Choose your desired theme",
-            "cancel": "Cancel"
+        "langDialog": {
+            "langWarn": "System default language is not supported by this app.",
+            "sysLang": "Use System Language"
         }
     }
 }

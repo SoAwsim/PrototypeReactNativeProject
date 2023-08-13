@@ -1,13 +1,15 @@
-import { useState, useContext } from "react";
+import { useContext, useState } from "react";
 import { ScrollView, StyleSheet } from 'react-native';
 import { Button, TextInput } from "react-native-paper";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { AuthContext } from "../../context/AuthContext";
+import { AuthContext, LocaleContext } from "../../context/AppContext";
 import i18n from "../../localization/i18n";
 
 export default function LoginScreen() {
     const insets = useSafeAreaInsets(); // safe area paddings
     const style = loginStyle(insets);
+
+    const { displayLang } = useContext(LocaleContext);
 
     const [enteredUsername, setEnteredUsername] = useState('');
     const [enteredPassword, setEnteredPassword] = useState('');
@@ -35,7 +37,7 @@ export default function LoginScreen() {
             <TextInput
                 mode="outlined"
                 label={i18n.t('loginScreen.usernameField.label')}
-                placeholder={i18n.t('loginScreen.usernameField.placeholder')}
+                placeholder={i18n.t('loginScreen.usernameField.placeholder', { locale: displayLang })}
                 value={enteredUsername}
                 onChangeText={usernameInputHandler}
                 autoCapitalize="none"
@@ -51,7 +53,7 @@ export default function LoginScreen() {
             <TextInput
                 ref={input => this.passwordInput = input}
                 mode="outlined"
-                label={i18n.t('loginScreen.passwordField.label')}
+                label={i18n.t('loginScreen.passwordField.label', { locale: displayLang })}
                 value={enteredPassword}
                 onChangeText={passwordInputHandler}
                 textContentType="password" // IOS 11+ keychain support
@@ -67,7 +69,7 @@ export default function LoginScreen() {
                 onPress={signInHandler}
                 style={style.SignInButton}
             >
-                {i18n.t('loginScreen.signInButton')}
+                {i18n.t('loginScreen.signInButton', { locale: displayLang })}
             </Button>
         </ScrollView>
     );

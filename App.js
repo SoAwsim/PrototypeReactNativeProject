@@ -1,12 +1,15 @@
 import React from 'react';
 import 'react-native-gesture-handler';
-import ThemeProvider from './src/context/ThemeProvider';
+import LocaleProvider from './src/context/providers/LocaleProvider';
+import ThemeProvider from './src/context/providers/ThemeProvider';
 import AuthFlow from './src/navigation/AuthFlow';
 
 export default function App() {
 	return (
 		<ThemeProvider>
-			<AuthFlow />
+			<LocaleProvider>
+				<AuthFlow />
+			</LocaleProvider>
 		</ThemeProvider>
 	);
 }
