@@ -26,7 +26,7 @@ export default function SettingsScreen({ navigation }) {
             </Appbar.Header>
             <View style={style.MainView}>
                 <Portal>
-                    <ThemeDialog visible={dialogVisible} hideDialog={hideDialog}/>
+                    <ThemeDialog visible={dialogVisible} hideDialog={hideDialog} />
                 </Portal>
                 <ScrollView>
                     <Text variant="labelLarge" style={style.SectionText}>App</Text>
