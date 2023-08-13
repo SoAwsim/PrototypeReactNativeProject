@@ -2,6 +2,7 @@ import { Button, Dialog, RadioButton, Text } from "react-native-paper";
 import { useState, useContext } from "react";
 import { View, Pressable, StyleSheet } from "react-native";
 import { ThemeContext } from "../../context/ThemeProvider";
+import i18n from "../../localization/i18n";
 
 export default function ThemeDialog({ visible, hideDialog }) {
     const { currentTheme, changeTheme } = useContext(ThemeContext);
@@ -15,7 +16,7 @@ export default function ThemeDialog({ visible, hideDialog }) {
 
     return (
         <Dialog visible={visible} onDismiss={hideDialog}>
-            <Dialog.Title>Choose your desired theme</Dialog.Title>
+            <Dialog.Title>{i18n.t('settingsScreen.themeDialog.title')}</Dialog.Title>
             <Dialog.Content>
                 <Pressable onPress={() => selectButton('light')}>
                     <View style={ThemeDialogStyle.RadioElement}>
@@ -24,7 +25,7 @@ export default function ThemeDialog({ visible, hideDialog }) {
                             status={ checked === 'light' ? 'checked' : 'unchecked' }
                             onPress={() => selectButton('light')}
                         />
-                        <Text variant="titleMedium">Light</Text>
+                        <Text variant="titleMedium">{i18n.t('settingsScreen.themeText.light')}</Text>
                     </View>
                 </Pressable>
                 <Pressable onPress={() => selectButton('dark')}>
@@ -34,7 +35,7 @@ export default function ThemeDialog({ visible, hideDialog }) {
                             status={ checked === 'dark' ? 'checked' : 'unchecked' }
                             onPress={() => selectButton('dark')}
                         />
-                        <Text variant="titleMedium">Dark</Text>
+                        <Text variant="titleMedium">{i18n.t('settingsScreen.themeText.dark')}</Text>
                     </View>
                 </Pressable>
                 <Pressable onPress={() => selectButton('system')}>
@@ -44,12 +45,12 @@ export default function ThemeDialog({ visible, hideDialog }) {
                             status={ checked === 'system' ? 'checked' : 'unchecked' }
                             onPress={() => selectButton('system')}
                         />
-                        <Text variant="titleMedium">System Default</Text>
+                        <Text variant="titleMedium">{i18n.t('settingsScreen.themeText.system')}</Text>
                     </View>
                 </Pressable>
             </Dialog.Content>
             <Dialog.Actions>
-                <Button onPress={hideDialog}>Cancel</Button>
+                <Button onPress={hideDialog}>{i18n.t('settingsScreen.themeDialog.cancel')}</Button>
             </Dialog.Actions>
         </Dialog>
     );

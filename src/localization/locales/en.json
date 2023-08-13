@@ -1,0 +1,35 @@
+{
+    "loginScreen": {
+        "usernameField": {
+            "label": "Enter your username",
+            "placeholder": "username"
+        },
+        "passwordField": {
+            "label": "Enter your password"
+        },
+        "signInButton": "Sign In"
+    },
+    "dummyHomeScreen": {
+        "dummyText": "This is the dummy home page",
+        "homeDrawer": {
+            "settings": "Settings",
+            "signOut": "Sign Out"
+        }
+    },
+    "settingsScreen": {
+        "appBarTitle": "Settings",
+        "sectionApp": {
+            "title": "App",
+            "theme": "Theme"
+        },
+        "themeText": {
+            "system": "System Default",
+            "light": "Light",
+            "dark": "Dark"
+        },
+        "themeDialog": {
+            "title": "Choose your desired theme",
+            "cancel": "Cancel"
+        }
+    }
+}

@@ -6,6 +6,7 @@ import DummyHome from "../screens/dummyhome/DummyHome";
 import SettingsScreen from "../screens/settings/SettingsScreen";
 import { AuthContext } from "../context/AuthContext";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import i18n from "../localization/i18n";
 
 const DrawerNavigation = createDrawerNavigator();
 
@@ -35,7 +36,7 @@ function HomeDrawerContent(props) {
                         );
                     })*/}
                     <Drawer.Item
-                        label="Settings"
+                        label={i18n.t('dummyHomeScreen.homeDrawer.settings')}
                         icon="cog-outline"
                         onPress={() => {
                             props.navigation.closeDrawer();
@@ -45,7 +46,7 @@ function HomeDrawerContent(props) {
                 </Drawer.Section>
                 <Drawer.Section>
                     <Drawer.Item
-                        label="Sign Out"
+                        label={i18n.t('dummyHomeScreen.homeDrawer.signOut')}
                         icon='logout'
                         active={false}
                         onPress={() => signOut()}

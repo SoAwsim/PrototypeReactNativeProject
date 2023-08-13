@@ -1,6 +1,7 @@
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { StyleSheet, View } from 'react-native';
 import { Text, Appbar } from 'react-native-paper';
+import i18n from "../../localization/i18n";
 
 export default function DummyHome({ navigation }) {
     const insets = useSafeAreaInsets();
@@ -11,7 +12,7 @@ export default function DummyHome({ navigation }) {
                 <Appbar.Action icon="menu" onPress={() => navigation.openDrawer()} />
             </Appbar.Header>
             <View style={styles(insets).SafeAreaFlex}>
-                <Text>This is the dummy home page</Text>
+                <Text>{i18n.t('dummyHomeScreen.dummyText')}</Text>
             </View>
         </>
     );

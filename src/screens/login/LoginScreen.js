@@ -3,6 +3,7 @@ import { ScrollView, StyleSheet } from 'react-native';
 import { Button, TextInput } from "react-native-paper";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { AuthContext } from "../../context/AuthContext";
+import i18n from "../../localization/i18n";
 
 export default function LoginScreen() {
     const insets = useSafeAreaInsets(); // safe area paddings
@@ -33,8 +34,8 @@ export default function LoginScreen() {
         <ScrollView keyboardShouldPersistTaps='handled' contentContainerStyle={style.SafeAreaFlex}>
             <TextInput
                 mode="outlined"
-                label="Enter your username"
-                placeholder="exampleusername"
+                label={i18n.t('loginScreen.usernameField.label')}
+                placeholder={i18n.t('loginScreen.usernameField.placeholder')}
                 value={enteredUsername}
                 onChangeText={usernameInputHandler}
                 autoCapitalize="none"
@@ -50,7 +51,7 @@ export default function LoginScreen() {
             <TextInput
                 ref={input => this.passwordInput = input}
                 mode="outlined"
-                label="Enter your password"
+                label={i18n.t('loginScreen.passwordField.label')}
                 value={enteredPassword}
                 onChangeText={passwordInputHandler}
                 textContentType="password" // IOS 11+ keychain support
@@ -66,7 +67,7 @@ export default function LoginScreen() {
                 onPress={signInHandler}
                 style={style.SignInButton}
             >
-                Sign In
+                {i18n.t('loginScreen.signInButton')}
             </Button>
         </ScrollView>
     );

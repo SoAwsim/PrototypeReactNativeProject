@@ -1,0 +1,35 @@
+{
+    "loginScreen": {
+        "usernameField": {
+            "label": "Kullanıcı Adınızı Giriniz",
+            "placeholder": "kullanıcı adı"
+        },
+        "passwordField": {
+            "label": "Şifrenizi Giriniz"
+        },
+        "signInButton": "Giriş Yap"
+    },
+    "dummyHomeScreen": {
+        "dummyText": "Burası geçici ana ekran",
+        "homeDrawer": {
+            "settings": "Ayarlar",
+            "signOut": "Çıkış Yap"
+        }
+    },
+    "settingsScreen": {
+        "appBarTitle": "Ayarlar",
+        "sectionApp": {
+            "title": "Uygulama",
+            "theme": "Tema"
+        },
+        "themeText": {
+            "system": "Sistem Varsayılanı",
+            "light": "Açık",
+            "dark": "Koyu"
+        },
+        "themeDialog": {
+            "title": "İstediğiniz Temayı Seçiniz",
+            "cancel": "İptal"
+        }
+    }
+}
