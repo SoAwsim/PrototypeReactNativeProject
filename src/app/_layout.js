@@ -1,18 +1,18 @@
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { SplashScreen, Stack, useRouter } from "expo-router";
+import { useReducer, useState, useEffect, useMemo } from "react";
+import { AuthContext } from "../context/AppContext";
+import CustomThemeProvider from "../context/providers/ThemeProvider";
+import LocaleProvider from "../context/providers/LocaleProvider";
 import axios from "axios";
-import * as React from "react";
-import { config } from '../../Config';
-import { AuthContext } from '../context/AppContext';
-import LoginScreen from '../screens/login/LoginScreen';
-import SplashScreen from "../screens/splash/SplashScreen";
-import HomeStack from './HomeDrawerNavigation';
+import { config } from '../../Config'
 
-const Stack = createNativeStackNavigator();
-
-export default function AuthFlow() {
+export default function RootLayout() {
+    const router = useRouter();
+    SplashScreen.preventAutoHideAsync();
+    
     // this is a complex state with multiple variables thats why I have used useReducer() here
     // dispatch() function is used to manage the state and the state variable is used to read the current state
-    const [state, dispatch] = React.useReducer( // use secure tokens here in the future this is just a dummy implemenetation
+    const [state, dispatch] = useReducer( // use secure tokens here in the future this is just a dummy implemenetation
         (prevState, action) => {
             switch (action.type) {
                 case 'RESTORE_TOKEN':
@@ -42,16 +42,16 @@ export default function AuthFlow() {
         }
     );
 
-    const [isError, setIsError] = React.useState(false);
+    const [isError, setIsError] = useState(false);
 
     // used for restoring the authtoken from the storage
-    React.useEffect(() => {
+    useEffect(() => {
         // restore stored auth token in the future instead loading null
         dispatch({ type: 'RESTORE_TOKEN', token: null });
     }, []);
 
     // value for the AuthContext
-    const authContext = React.useMemo(
+    const authContext = useMemo(
         () => ({
             signIn: ({ enteredUsername, enteredPassword }) => {
                 const loginAPI = "https://workbench.persystlab.org/api/login.php";
@@ -67,6 +67,7 @@ export default function AuthFlow() {
                             if (data.status === "success") {
                                 console.log("login success");
                                 dispatch({ type: 'SIGN_IN', token: 'dummy-token' });
+                                router.replace('/home');
                             } else {
                                 setIsError(true);
                                 console.log("login failed");
@@ -92,34 +93,42 @@ export default function AuthFlow() {
                     }
                 }
             },
-            signOut: () => dispatch({ type: 'SIGN_OUT' }), // TODO: Handle proper sign out after implementing authtokens
+            signOut: () => {
+                dispatch({ type: 'SIGN_OUT' });
+                router.replace('/login');
+            }, // TODO: Handle proper sign out after implementing authtokens
+            isSignIn: state.userToken != null,
             isError,
             setIsError,
         }),
-        [isError]
+        [isError, state]
     );
 
+    useEffect(() => {
+        if (!state.isLoading) {
+            SplashScreen.hideAsync();
+        }
+    }, [state]);
+
     if (state.isLoading) {
-        // app has not loaded the user token from storage yet
-        return <SplashScreen />;
+        return null;
     }
 
     return (
-        <AuthContext.Provider value={authContext}>
-            <Stack.Navigator screenOptions={{ headerShown: false }}>
-                {state.userToken == null ? (
-                    <Stack.Screen
-                        name="Login"
-                        options={{ animationTypeForReplace: state.isSignout ? 'pop' : 'push' }}
-                        component={LoginScreen}
-                    />
-                ) : (
-                    <Stack.Screen
-                        name="DummyHome"
-                        component={HomeStack}
-                    />
-                )}
-            </Stack.Navigator>
-        </AuthContext.Provider>
-    )
+        <CustomThemeProvider>
+            <LocaleProvider>
+                <AuthContext.Provider value={authContext}>
+                    <Stack screenOptions={{ headerShown: false }} initialRouteName="modal" >
+                        <Stack.Screen
+                            name="login"
+                            options={{ animationTypeForReplace: state.isSignout ? 'pop' : 'push' }}
+                        />
+                        <Stack.Screen
+                            name="home"
+                        />
+                    </Stack>
+                </AuthContext.Provider>
+            </LocaleProvider>
+        </CustomThemeProvider>
+    );
 }

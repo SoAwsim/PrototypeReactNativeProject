@@ -112,7 +112,7 @@ export default function LocaleProvider({ children }) {
         }),
         [systemLang, appLang, displayLang]
     )
-
+    
     return (
         <LocaleContext.Provider value={langPreferences}>
             {children}

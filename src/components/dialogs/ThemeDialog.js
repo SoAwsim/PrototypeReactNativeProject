@@ -1,9 +1,9 @@
 import { useContext } from "react";
 import { Modal, ScrollView } from "react-native";
 import { Button, Dialog } from "react-native-paper";
-import { LocaleContext, ThemeContext } from "../../../context/AppContext";
-import i18n from "../../../localization/i18n";
-import CustomRadioItem from "../components/CustomRadioItem";
+import { LocaleContext, ThemeContext } from "../../context/AppContext";
+import i18n from "../../localization/i18n";
+import CustomRadioItem from "../CustomRadioItem";
 
 export default function ThemeDialog({ visible, hideDialog }) {
     const { currentTheme, changeTheme } = useContext(ThemeContext);
@@ -27,6 +27,12 @@ export default function ThemeDialog({ visible, hideDialog }) {
                 <Dialog.Content>
                     <ScrollView>
                         <CustomRadioItem
+                            onPress={() => selectButton('system')}
+                            radioValue="system"
+                            radioStatusCondition={currentTheme === 'system'}
+                            label={i18n.t('settingsScreen.themeText.system', { locale: displayLang })}
+                        />
+                        <CustomRadioItem
                             onPress={() => selectButton('light')}
                             radioValue="light"
                             radioStatusCondition={currentTheme === 'light'}
@@ -37,12 +43,6 @@ export default function ThemeDialog({ visible, hideDialog }) {
                             radioValue="dark"
                             radioStatusCondition={currentTheme === 'dark'}
                             label={i18n.t('settingsScreen.themeText.dark', { locale: displayLang })}
-                        />
-                        <CustomRadioItem
-                            onPress={() => selectButton('system')}
-                            radioValue="system"
-                            radioStatusCondition={currentTheme === 'system'}
-                            label={i18n.t('settingsScreen.themeText.system', { locale: displayLang })}
                         />
                     </ScrollView>
                 </Dialog.Content>

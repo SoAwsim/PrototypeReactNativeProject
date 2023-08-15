@@ -4,11 +4,12 @@ import { Appbar, Text } from "react-native-paper";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { LocaleContext, ThemeContext } from "../../context/AppContext";
 import i18n from "../../localization/i18n";
-import SettingsItem from "./components/SettingsItem";
-import LanguageDialog from "./dialogs/LanguageDialog";
-import ThemeDialog from "./dialogs/ThemeDialog";
+import SettingsItem from "../../components/SettingsItem";
+import LanguageDialog from "../../components/dialogs/LanguageDialog";
+import ThemeDialog from "../../components/dialogs/ThemeDialog";
+import { useRouter } from "expo-router";
 
-export default function SettingsScreen({ navigation }) {
+export default function SettingsScreen() {
     const insets = useSafeAreaInsets();
     const style = SettingsStyle(insets);
 
@@ -28,10 +29,12 @@ export default function SettingsScreen({ navigation }) {
     const themeText = currentTheme === 'system' ? i18n.t('settingsScreen.themeText.system') :
         currentTheme === 'light' ? i18n.t('settingsScreen.themeText.light') : i18n.t('settingsScreen.themeText.dark');
     
+    const router = useRouter();
+
     return (
         <>
             <Appbar.Header>
-                <Appbar.BackAction onPress={() => navigation.goBack()} />
+                <Appbar.BackAction onPress={() => router.back()} />
                 <Appbar.Content title={i18n.t('settingsScreen.appBarTitle', { locale: displayLang })} style={{ marginLeft: 20 }} />
             </Appbar.Header>
             <View style={style.MainView}>

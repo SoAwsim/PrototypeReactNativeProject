@@ -2,8 +2,8 @@ import { useContext, useState } from "react";
 import { ScrollView, StyleSheet } from 'react-native';
 import { Button, TextInput } from "react-native-paper";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { AuthContext, LocaleContext } from "../../context/AppContext";
-import i18n from "../../localization/i18n";
+import { AuthContext, LocaleContext } from "../context/AppContext";
+import i18n from "../localization/i18n";
 
 export default function LoginScreen() {
     const insets = useSafeAreaInsets(); // safe area paddings

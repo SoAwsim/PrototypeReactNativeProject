@@ -3,6 +3,7 @@ import {
     NavigationContainer,
     DarkTheme as NavigationDarkTheme,
     DefaultTheme as NavigationDefaultTheme,
+    ThemeProvider
 } from "@react-navigation/native";
 import merge from "deepmerge";
 import { StatusBar } from "expo-status-bar";
@@ -37,7 +38,7 @@ function BuildCombinedTheme() {
 const combinedTheme = BuildCombinedTheme();
 
 // provides required contexts for the child components
-export default function ThemeProvider({ children }) {
+export default function CustomThemeProvider({ children }) {
     const [currentTheme, setCurrentTheme] = useState('system');
     
     // provides hook for accessing the system theme
@@ -89,15 +90,13 @@ export default function ThemeProvider({ children }) {
     const theme = isThemeDark() ? {appTheme: combinedTheme.CombinedDarkTheme, statusBar: 'light'} : {appTheme: combinedTheme.CombinedDefaultTheme, statusBar: 'dark'};
 
     return (
-        <ThemeContext.Provider value={preferences}>
-            <SafeAreaProvider>
-                <PaperProvider theme={theme.appTheme}>
-                    <NavigationContainer theme={theme.appTheme}>
-                        {children}
-                        <StatusBar style={theme.statusBar} />
-                    </NavigationContainer>
-                </PaperProvider>
-            </SafeAreaProvider>
-        </ThemeContext.Provider>
+        <PaperProvider theme={theme.appTheme}>
+            <ThemeProvider value={theme.appTheme}>
+                <ThemeContext.Provider value={preferences}>
+                    {children}
+                    <StatusBar style={theme.statusBar} />
+                </ThemeContext.Provider>
+            </ThemeProvider>
+        </PaperProvider>
     );
 }
