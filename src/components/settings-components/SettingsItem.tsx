@@ -1,7 +1,15 @@
 import { View } from "react-native";
 import { Text, TouchableRipple } from "react-native-paper";
 
-export default function SettingsItem({ title, label, onPress }) {
+export default function SettingsItem({
+  title,
+  label,
+  onPress,
+}: {
+  title: string;
+  label: string;
+  onPress: () => void;
+}) {
   return (
     <TouchableRipple onPress={onPress}>
       <View style={{ paddingVertical: 10, paddingLeft: 20 }}>
