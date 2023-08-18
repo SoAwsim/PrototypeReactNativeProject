@@ -1,98 +1,108 @@
 import { useContext, useState } from "react";
-import { ScrollView, StyleSheet } from 'react-native';
+import { ScrollView, StyleSheet } from "react-native";
 import { Button, TextInput } from "react-native-paper";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { AuthContext, LocaleContext } from "../context/AppContext";
 import i18n from "../localization/i18n";
 
 export default function LoginScreen() {
-    const insets = useSafeAreaInsets(); // safe area paddings
-    const style = loginStyle(insets);
+  const insets = useSafeAreaInsets(); // safe area paddings
+  const style = loginStyle(insets);
 
-    const { displayLang } = useContext(LocaleContext);
+  const { displayLang } = useContext(LocaleContext);
 
-    const [enteredUsername, setEnteredUsername] = useState('');
-    const [enteredPassword, setEnteredPassword] = useState('');
+  const [enteredUsername, setEnteredUsername] = useState("");
+  const [enteredPassword, setEnteredPassword] = useState("");
 
-    const { signIn, isError, setIsError } = useContext(AuthContext);
+  const { signIn, isError, setIsError } = useContext(AuthContext);
 
-    function usernameInputHandler(enteredUsername) {
-        setEnteredUsername(enteredUsername);
-        setIsError(false); // clear error state when anything is typed
-    };
+  function usernameInputHandler(enteredUsername) {
+    setEnteredUsername(enteredUsername);
+    setIsError(false); // clear error state when anything is typed
+  }
 
-    function passwordInputHandler(enteredPassword) {
-        setEnteredPassword(enteredPassword);
-        setIsError(false); // clear error state when anything is typed
-    };
+  function passwordInputHandler(enteredPassword) {
+    setEnteredPassword(enteredPassword);
+    setIsError(false); // clear error state when anything is typed
+  }
 
-    function signInHandler() {
-        console.log("Username: " + enteredUsername + "\nPassword: " + enteredPassword); // for debugging proposes remove later
+  function signInHandler() {
+    console.log(
+      "Username: " + enteredUsername + "\nPassword: " + enteredPassword
+    ); // for debugging proposes remove later
 
-        signIn({ enteredUsername, enteredPassword }); // use singIn function from AuthContext
-    };
+    signIn({ enteredUsername, enteredPassword }); // use singIn function from AuthContext
+  }
 
-    return (
-        <ScrollView keyboardShouldPersistTaps='handled' contentContainerStyle={style.SafeAreaFlex}>
-            <TextInput
-                mode="outlined"
-                label={i18n.t('loginScreen.usernameField.label')}
-                placeholder={i18n.t('loginScreen.usernameField.placeholder', { locale: displayLang })}
-                value={enteredUsername}
-                onChangeText={usernameInputHandler}
-                autoCapitalize="none"
-                textContentType="username" // IOS 11+ keychain support
-                autoComplete="username"
-                error={isError}
-                keyboardType="default"
-                returnKeyType="next"
-                blurOnSubmit={false}
-                onSubmitEditing={() => this.passwordInput.focus()}
-                style={style.TextInput}
-            />
-            <TextInput
-                ref={input => this.passwordInput = input}
-                mode="outlined"
-                label={i18n.t('loginScreen.passwordField.label', { locale: displayLang })}
-                value={enteredPassword}
-                onChangeText={passwordInputHandler}
-                textContentType="password" // IOS 11+ keychain support
-                autoComplete="current-password"
-                secureTextEntry={true}
-                error={isError}
-                returnKeyType="send"
-                onSubmitEditing={() => signInHandler()}
-                style={style.TextInput}
-            />
-            <Button
-                mode="contained"
-                onPress={signInHandler}
-                style={style.SignInButton}
-            >
-                {i18n.t('loginScreen.signInButton', { locale: displayLang })}
-            </Button>
-        </ScrollView>
-    );
+  return (
+    <ScrollView
+      keyboardShouldPersistTaps="handled"
+      contentContainerStyle={style.SafeAreaFlex}
+    >
+      <TextInput
+        mode="outlined"
+        label={i18n.t("loginScreen.usernameField.label")}
+        placeholder={i18n.t("loginScreen.usernameField.placeholder", {
+          locale: displayLang,
+        })}
+        value={enteredUsername}
+        onChangeText={usernameInputHandler}
+        autoCapitalize="none"
+        textContentType="username" // IOS 11+ keychain support
+        autoComplete="username"
+        error={isError}
+        keyboardType="default"
+        returnKeyType="next"
+        blurOnSubmit={false}
+        onSubmitEditing={() => this.passwordInput.focus()}
+        style={style.TextInput}
+      />
+      <TextInput
+        ref={(input) => (this.passwordInput = input)}
+        mode="outlined"
+        label={i18n.t("loginScreen.passwordField.label", {
+          locale: displayLang,
+        })}
+        value={enteredPassword}
+        onChangeText={passwordInputHandler}
+        textContentType="password" // IOS 11+ keychain support
+        autoComplete="current-password"
+        secureTextEntry={true}
+        error={isError}
+        returnKeyType="send"
+        onSubmitEditing={() => signInHandler()}
+        style={style.TextInput}
+      />
+      <Button
+        mode="contained"
+        onPress={signInHandler}
+        style={style.SignInButton}
+      >
+        {i18n.t("loginScreen.signInButton", { locale: displayLang })}
+      </Button>
+    </ScrollView>
+  );
 }
 
-const loginStyle = props => StyleSheet.create({
+const loginStyle = (props) =>
+  StyleSheet.create({
     SafeAreaFlex: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-        paddingTop: props.top,
-        paddingBottom: props.bottom,
-        paddingLeft: props.left,
-        paddingRight: props.right
+      flex: 1,
+      alignItems: "center",
+      justifyContent: "center",
+      paddingTop: props.top,
+      paddingBottom: props.bottom,
+      paddingLeft: props.left,
+      paddingRight: props.right,
     },
 
     TextInput: {
-        width: '95%',
-        margin: 10
+      width: "95%",
+      margin: 10,
     },
 
     SignInButton: {
-        margin: 40,
-        width: '75%'
-    }
-});
+      margin: 40,
+      width: "75%",
+    },
+  });

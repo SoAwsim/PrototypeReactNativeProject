@@ -1,38 +1,38 @@
 {
-    "lang": "English",
-    "loginScreen": {
-        "usernameField": {
-            "label": "Enter your username",
-            "placeholder": "username"
-        },
-        "passwordField": {
-            "label": "Enter your password"
-        },
-        "signInButton": "Sign In"
+  "lang": "English",
+  "loginScreen": {
+    "usernameField": {
+      "label": "Enter your username",
+      "placeholder": "username"
     },
-    "dummyHomeScreen": {
-        "dummyText": "This is the dummy home page",
-        "homeDrawer": {
-            "settings": "Settings",
-            "signOut": "Sign Out"
-        }
+    "passwordField": {
+      "label": "Enter your password"
     },
-    "settingsScreen": {
-        "appBarTitle": "Settings",
-        "cancel": "Cancel",
-        "sectionApp": {
-            "title": "App",
-            "theme": "Theme",
-            "lang": "Language"
-        },
-        "themeText": {
-            "system": "System Default",
-            "light": "Light",
-            "dark": "Dark"
-        },
-        "langDialog": {
-            "langWarn": "System default language is not supported by this app.",
-            "sysLang": "Use System Language"
-        }
+    "signInButton": "Sign In"
+  },
+  "dummyHomeScreen": {
+    "dummyText": "This is the dummy home page",
+    "homeDrawer": {
+      "settings": "Settings",
+      "signOut": "Sign Out"
     }
+  },
+  "settingsScreen": {
+    "appBarTitle": "Settings",
+    "cancel": "Cancel",
+    "sectionApp": {
+      "title": "App",
+      "theme": "Theme",
+      "lang": "Language"
+    },
+    "themeText": {
+      "system": "System Default",
+      "light": "Light",
+      "dark": "Dark"
+    },
+    "langDialog": {
+      "langWarn": "System default language is not supported by this app.",
+      "sysLang": "Use System Language"
+    }
+  }
 }

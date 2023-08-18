@@ -1,38 +1,38 @@
 {
-    "lang": "Türkçe",
-    "loginScreen": {
-        "usernameField": {
-            "label": "Kullanıcı Adınızı Giriniz",
-            "placeholder": "kullanıcı adı"
-        },
-        "passwordField": {
-            "label": "Şifrenizi Giriniz"
-        },
-        "signInButton": "Giriş Yap"
+  "lang": "Türkçe",
+  "loginScreen": {
+    "usernameField": {
+      "label": "Kullanıcı Adınızı Giriniz",
+      "placeholder": "kullanıcı adı"
     },
-    "dummyHomeScreen": {
-        "dummyText": "Burası geçici ana ekran",
-        "homeDrawer": {
-            "settings": "Ayarlar",
-            "signOut": "Çıkış Yap"
-        }
+    "passwordField": {
+      "label": "Şifrenizi Giriniz"
     },
-    "settingsScreen": {
-        "appBarTitle": "Ayarlar",
-        "cancel": "İptal",
-        "sectionApp": {
-            "title": "Uygulama",
-            "theme": "Tema",
-            "lang": "Dil"
-        },
-        "themeText": {
-            "system": "Sistem Varsayılanı",
-            "light": "Açık",
-            "dark": "Koyu"
-        },
-        "langDialog": {
-            "langWarn": "Sistemin varsayılan dili bu uygulama tarafından desteklenmiyor.",
-            "sysLang": "Sistemin Dilini Kullan"
-        }
+    "signInButton": "Giriş Yap"
+  },
+  "dummyHomeScreen": {
+    "dummyText": "Burası geçici ana ekran",
+    "homeDrawer": {
+      "settings": "Ayarlar",
+      "signOut": "Çıkış Yap"
     }
+  },
+  "settingsScreen": {
+    "appBarTitle": "Ayarlar",
+    "cancel": "İptal",
+    "sectionApp": {
+      "title": "Uygulama",
+      "theme": "Tema",
+      "lang": "Dil"
+    },
+    "themeText": {
+      "system": "Sistem Varsayılanı",
+      "light": "Açık",
+      "dark": "Koyu"
+    },
+    "langDialog": {
+      "langWarn": "Sistemin varsayılan dili bu uygulama tarafından desteklenmiyor.",
+      "sysLang": "Sistemin Dilini Kullan"
+    }
+  }
 }
