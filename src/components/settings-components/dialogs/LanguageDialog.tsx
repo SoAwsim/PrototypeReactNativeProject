@@ -2,15 +2,26 @@ import { useContext } from "react";
 import { Modal, ScrollView } from "react-native";
 import { Button, Dialog, Text } from "react-native-paper";
 import { LocaleContext } from "../../../context/AppContext";
+import {
+  AppLang,
+  LocaleValueType,
+  SystemLang,
+} from "../../../context/providers/LocaleProvider";
 import i18n from "../../../localization/i18n";
 import CustomRadioItem from "../CustomRadioItem";
 
-export default function LanguageDialog({ visible, hideDialog }) {
-  const langContext = useContext(LocaleContext);
+export default function LanguageDialog({
+  visible,
+  hideDialog,
+}: {
+  visible: boolean;
+  hideDialog: () => void;
+}) {
+  const langContext: LocaleValueType = useContext(LocaleContext);
 
-  const showUseSystem = langContext.systemLang !== "und";
+  const showUseSystem = langContext.systemLang !== SystemLang.und;
 
-  function selectLang(selectedLang) {
+  function selectLang(selectedLang: AppLang) {
     langContext.changeLang(selectedLang);
     hideDialog();
   }
@@ -27,9 +38,9 @@ export default function LanguageDialog({ visible, hideDialog }) {
           <ScrollView>
             {showUseSystem ? (
               <CustomRadioItem
-                onPress={() => selectLang("system")}
+                onPress={() => selectLang(AppLang.sys)}
                 radioValue="system"
-                radioStatusCondition={langContext.appLang === "system"}
+                radioStatusCondition={langContext.appLang === AppLang.sys}
                 label={i18n.t("settingsScreen.langDialog.sysLang", {
                   locale: langContext.displayLang,
                 })}
@@ -42,18 +53,18 @@ export default function LanguageDialog({ visible, hideDialog }) {
               </Text>
             )}
             <CustomRadioItem
-              onPress={() => selectLang("en")}
+              onPress={() => selectLang(AppLang.en)}
               radioValue="en"
               radioStatusCondition={
-                langContext.appLang === "en" ||
-                (langContext.appLang === "system" && !showUseSystem)
+                langContext.appLang === AppLang.en ||
+                (langContext.appLang === AppLang.sys && !showUseSystem)
               }
               label="English"
             />
             <CustomRadioItem
-              onPress={() => selectLang("tr")}
+              onPress={() => selectLang(AppLang.tr)}
               radioValue="tr"
-              radioStatusCondition={langContext.appLang === "tr"}
+              radioStatusCondition={langContext.appLang === AppLang.tr}
               label="Türkçe"
             />
           </ScrollView>
