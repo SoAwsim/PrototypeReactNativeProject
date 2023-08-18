@@ -41,7 +41,9 @@ export default function LoginScreen() {
     >
       <TextInput
         mode="outlined"
-        label={i18n.t("loginScreen.usernameField.label")}
+        label={i18n.t("loginScreen.usernameField.label", {
+          locale: displayLang,
+        })}
         placeholder={i18n.t("loginScreen.usernameField.placeholder", {
           locale: displayLang,
         })}
