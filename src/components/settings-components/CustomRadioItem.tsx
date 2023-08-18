@@ -6,6 +6,11 @@ export default function CustomRadioItem({
   radioValue,
   radioStatusCondition,
   label,
+}: {
+  onPress: () => void;
+  radioValue: string;
+  radioStatusCondition: boolean;
+  label: string;
 }) {
   return (
     <Pressable onPress={onPress}>
