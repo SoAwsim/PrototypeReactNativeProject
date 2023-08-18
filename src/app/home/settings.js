@@ -4,9 +4,9 @@ import { Appbar, Text } from "react-native-paper";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { LocaleContext, ThemeContext } from "../../context/AppContext";
 import i18n from "../../localization/i18n";
-import SettingsItem from "../../components/SettingsItem";
-import LanguageDialog from "../../components/dialogs/LanguageDialog";
-import ThemeDialog from "../../components/dialogs/ThemeDialog";
+import SettingsItem from "../../components/settings-components/SettingsItem";
+import LanguageDialog from "../../components/settings-components/dialogs/LanguageDialog";
+import ThemeDialog from "../../components/settings-components/dialogs/ThemeDialog";
 import { useRouter } from "expo-router";
 
 export default function SettingsScreen() {

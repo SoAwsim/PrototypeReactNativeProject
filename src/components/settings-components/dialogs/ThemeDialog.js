@@ -1,8 +1,8 @@
 import { useContext } from "react";
 import { Modal, ScrollView } from "react-native";
 import { Button, Dialog } from "react-native-paper";
-import { LocaleContext, ThemeContext } from "../../context/AppContext";
-import i18n from "../../localization/i18n";
+import { LocaleContext, ThemeContext } from "../../../context/AppContext";
+import i18n from "../../../localization/i18n";
 import CustomRadioItem from "../CustomRadioItem";
 
 export default function ThemeDialog({ visible, hideDialog }) {
