@@ -1,7 +1,7 @@
-import { useState } from "react";
-import { ScrollView, StyleSheet } from "react-native";
+import { useRef, useState } from "react";
+import { ScrollView, StyleSheet, TextInput as NativeInput } from "react-native";
 import { Button, TextInput } from "react-native-paper";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { EdgeInsets, useSafeAreaInsets } from "react-native-safe-area-context";
 import { useAuthContext } from "../providers/AuthProvider";
 import { useLocaleContext } from "../providers/LocaleProvider";
 import i18n from "../localization/i18n";
@@ -15,14 +15,16 @@ export default function LoginScreen() {
   const [enteredUsername, setEnteredUsername] = useState("");
   const [enteredPassword, setEnteredPassword] = useState("");
 
+  const refPasswordInput = useRef<NativeInput | null>(null);
+
   const { signIn, isError, clearInputError } = useAuthContext();
 
-  function usernameInputHandler(enteredUsername) {
+  function usernameInputHandler(enteredUsername: string) {
     setEnteredUsername(enteredUsername);
     clearInputError(); // clear error state when anything is typed
   }
 
-  function passwordInputHandler(enteredPassword) {
+  function passwordInputHandler(enteredPassword: string) {
     setEnteredPassword(enteredPassword);
     clearInputError(); // clear error state when anything is typed
   }
@@ -57,11 +59,11 @@ export default function LoginScreen() {
         keyboardType="default"
         returnKeyType="next"
         blurOnSubmit={false}
-        onSubmitEditing={() => this.passwordInput.focus()}
+        onSubmitEditing={() => refPasswordInput.current?.focus()}
         style={style.TextInput}
       />
       <TextInput
-        ref={(input) => (this.passwordInput = input)}
+        ref={refPasswordInput}
         mode="outlined"
         label={i18n.t("loginScreen.passwordField.label", {
           locale: displayLang,
@@ -87,16 +89,16 @@ export default function LoginScreen() {
   );
 }
 
-const loginStyle = (props) =>
+const loginStyle = (insets: EdgeInsets) =>
   StyleSheet.create({
     SafeAreaFlex: {
       flex: 1,
       alignItems: "center",
       justifyContent: "center",
-      paddingTop: props.top,
-      paddingBottom: props.bottom,
-      paddingLeft: props.left,
-      paddingRight: props.right,
+      paddingTop: insets.top,
+      paddingBottom: insets.bottom,
+      paddingLeft: insets.left,
+      paddingRight: insets.right,
     },
 
     TextInput: {
