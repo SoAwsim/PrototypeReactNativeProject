@@ -38,9 +38,9 @@ export default function LanguageDialog({
           <ScrollView>
             {showUseSystem ? (
               <CustomRadioItem
-                onPress={() => selectLang(AppLang.sys)}
+                onPress={() => selectLang("system")}
                 radioValue="system"
-                radioStatusCondition={langContext.appLang === AppLang.sys}
+                radioStatusCondition={langContext.appLang === "system"}
                 label={i18n.t("settingsScreen.langDialog.sysLang", {
                   locale: langContext.displayLang,
                 })}
@@ -53,18 +53,18 @@ export default function LanguageDialog({
               </Text>
             )}
             <CustomRadioItem
-              onPress={() => selectLang(AppLang.en)}
+              onPress={() => selectLang("en")}
               radioValue="en"
               radioStatusCondition={
-                langContext.appLang === AppLang.en ||
-                (langContext.appLang === AppLang.sys && !showUseSystem)
+                langContext.appLang === "en" ||
+                (langContext.appLang === "system" && !showUseSystem)
               }
               label="English"
             />
             <CustomRadioItem
-              onPress={() => selectLang(AppLang.tr)}
+              onPress={() => selectLang("tr")}
               radioValue="tr"
-              radioStatusCondition={langContext.appLang === AppLang.tr}
+              radioStatusCondition={langContext.appLang === "tr"}
               label="Türkçe"
             />
           </ScrollView>

@@ -10,18 +10,14 @@ export enum SystemLang {
   tr,
 }
 
-export enum AppLang {
-  sys = "system",
-  en = "en",
-  tr = "tr",
-}
+export type AppLang = "system" | "tr" | "en";
 
-export interface LocaleValueType {
+export type LocaleValueType = {
   changeLang: (lang: AppLang) => void;
   systemLang: SystemLang;
   appLang: AppLang;
   displayLang: string;
-}
+};
 
 function findDisplayLang(lang: SystemLang): string {
   switch (lang) {
@@ -38,7 +34,7 @@ export default function LocaleProvider({ children }: { children: ReactNode }) {
   const [appStateVisible, setAppStateVisible] = useState(appState.current);
 
   const [systemLang, setSystemLang] = useState(SystemLang.und);
-  const [appLang, setAppLang] = useState(AppLang.en);
+  const [appLang, setAppLang] = useState<AppLang>("en");
   const [displayLang, setDisplayLang] = useState("en");
 
   useEffect(() => {
@@ -54,7 +50,7 @@ export default function LocaleProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     AsyncStorage.getItem("app-lang")
-      .then((storageLang) => {
+      .then((storageLang: AppLang) => {
         let currentSysLang = getLocales()[0].languageCode;
         if (currentSysLang === "en") setSystemLang(SystemLang.en);
         else if (currentSysLang === "tr") setSystemLang(SystemLang.tr);
@@ -62,20 +58,10 @@ export default function LocaleProvider({ children }: { children: ReactNode }) {
 
         if (storageLang !== null) {
           // user has a stored lang preference
-          switch (storageLang) {
-            case "en":
-              setAppLang(AppLang.en);
-              break;
-            case "tr":
-              setAppLang(AppLang.tr);
-              break;
-            case "system":
-              setAppLang(AppLang.sys);
-              break;
-          }
+          setAppLang(storageLang);
 
           if (storageLang === "system") {
-            // user follow system lang
+            // user follows the system lang
             if (currentSysLang === "und") {
               setDisplayLang("en");
             } else {
@@ -85,14 +71,15 @@ export default function LocaleProvider({ children }: { children: ReactNode }) {
             // user is not following the system lang
             setDisplayLang(storageLang);
           }
-        } else if (currentSysLang !== "und") {
-          // user does not have a lang preference but system lang is supported by the app
-          setAppLang(AppLang.sys);
-          setDisplayLang(currentSysLang);
         } else {
-          // user does not have a lang preference and system lang is not supported by the app
-          setAppLang(AppLang.sys);
-          setDisplayLang("en");
+          setAppLang("system");
+          if (currentSysLang !== "und") {
+            // user does not have a lang preference but system lang is supported by the app
+            setDisplayLang(currentSysLang);
+          } else {
+            // user does not have a lang preference and system lang is not supported by the app
+            setDisplayLang("en");
+          }
         }
       })
       .catch((err) => console.log(err));
@@ -108,7 +95,7 @@ export default function LocaleProvider({ children }: { children: ReactNode }) {
         ? setSystemLang(SystemLang.tr)
         : setSystemLang(SystemLang.und);
 
-      if (appLang === AppLang.sys) {
+      if (appLang === "system") {
         if (systemLang === SystemLang.und) {
           console.log("Unsupported system language set, falling back to en");
         }
@@ -123,7 +110,7 @@ export default function LocaleProvider({ children }: { children: ReactNode }) {
         AsyncStorage.setItem("app-lang", lang).catch((err) => console.log(err));
         setAppLang(lang);
 
-        if (lang === AppLang.sys) {
+        if (lang === "system") {
           // user has chosen the system lang
           setDisplayLang(findDisplayLang(systemLang));
         } else {
