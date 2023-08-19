@@ -1,9 +1,10 @@
 import { useNavigation } from "expo-router";
 import { StyleSheet, View } from "react-native";
 import { Appbar, Text } from "react-native-paper";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { EdgeInsets, useSafeAreaInsets } from "react-native-safe-area-context";
 import { useLocaleContext } from "../../../providers/LocaleProvider";
 import i18n from "../../../localization/i18n";
+import { DrawerActions } from "@react-navigation/native";
 
 export default function Home() {
   const insets = useSafeAreaInsets();
@@ -15,7 +16,7 @@ export default function Home() {
   return (
     <>
       <Appbar.Header>
-        <Appbar.Action icon="menu" onPress={() => navigation.openDrawer()} />
+        <Appbar.Action icon="menu" onPress={() => navigation.dispatch(DrawerActions.openDrawer())} />
       </Appbar.Header>
       <View style={style.SafeAreaFlex}>
         <Text>
@@ -26,7 +27,7 @@ export default function Home() {
   );
 }
 
-const styles = (insets) =>
+const styles = (insets: EdgeInsets) =>
   StyleSheet.create({
     SafeAreaFlex: {
       flex: 1,
