@@ -4,7 +4,7 @@ import { useAuthContext } from "../providers/AuthProvider";
 
 export default function LoadAuthToken() {
   SplashScreen.preventAutoHideAsync();
-  const { isSignIn, isLoading } = useAuthContext();
+  const { isSignedIn, isLoading } = useAuthContext();
   const navigationState = useRootNavigationState();
 
   useEffect(() => {
@@ -15,7 +15,7 @@ export default function LoadAuthToken() {
 
   if (isLoading && !navigationState?.key) {
     return null;
-  } else if (isSignIn) {
+  } else if (isSignedIn) {
     return <Redirect href={"/home"} />;
   } else {
     return <Redirect href={"/login"} />;

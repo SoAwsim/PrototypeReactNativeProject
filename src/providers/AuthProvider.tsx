@@ -15,7 +15,8 @@ export type AuthPreferences = {
   signIn: (username: string, password: string) => void;
   signOut: () => void;
   isLoading: boolean;
-  isSignIn: boolean;
+  isSignedIn: boolean;
+  isSignout: boolean;
   isError: boolean;
   clearInputError: () => void;
 };
@@ -46,7 +47,7 @@ export function useAuthContext() {
 export default function AuthProvider({ children }: { children: ReactNode }) {
   const router = useRouter();
 
-	// this is a complex state with multiple variables thats why I have used useReducer() here
+  // this is a complex state with multiple variables thats why I have used useReducer() here
   // dispatch() function is used to manage the state and the state variable is used to read the current state
   const [state, dispatch] = useReducer(
     // use secure tokens here in the future this is just a dummy implemenetation
@@ -79,7 +80,7 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
     }
   );
 
-	// used for the error state of email and password field
+  // used for the error state of email and password field
   const [isError, setIsError] = useState(false);
 
   // used for restoring the authtoken from the storage
@@ -88,7 +89,7 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
     dispatch({ type: "RESTORE_TOKEN", token: null });
   }, []);
 
-	// value for AuthContext
+  // value for AuthContext
   const authContext: AuthPreferences = useMemo(
     () => ({
       signIn: (username, password) => {
@@ -137,7 +138,8 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
         router.replace("/login");
       }, // TODO: Handle proper sign out after implmenting auth tokens
       isLoading: state.isLoading,
-      isSignIn: state.userToken != null,
+      isSignedIn: state.userToken != null,
+      isSignout: state.isSignout,
       isError,
       clearInputError: () => {
         setIsError(false);
