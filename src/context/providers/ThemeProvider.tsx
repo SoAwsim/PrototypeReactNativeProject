@@ -1,39 +1,57 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
-    DarkTheme as NavigationDarkTheme,
-    DefaultTheme as NavigationDefaultTheme,
-    ThemeProvider
+  DarkTheme as NavigationDarkTheme,
+  DefaultTheme as NavigationDefaultTheme,
+  Theme,
+  ThemeProvider,
 } from "@react-navigation/native";
 import merge from "deepmerge";
-import { StatusBar } from "expo-status-bar";
-import { useEffect, useMemo, useState } from "react";
+import { StatusBar, StatusBarStyle } from "expo-status-bar";
+import { useEffect, useMemo, useState, ReactNode } from "react";
 import { useColorScheme } from "react-native";
 import {
-    MD3DarkTheme,
-    MD3LightTheme,
-    PaperProvider,
-    adaptNavigationTheme,
+  MD3DarkTheme,
+  MD3LightTheme,
+  PaperProvider,
+  adaptNavigationTheme,
 } from "react-native-paper";
 import { ThemeContext } from "../AppContext";
+import { ThemeProp } from "react-native-paper/lib/typescript/types";
+
+type CombinedTheme = Theme & ThemeProp;
 
 // Build a combined theme for react-navigation and react-native-paper components
-function BuildCombinedTheme() {
+function BuildCombinedTheme(): {
+  CombinedDefaultTheme: CombinedTheme;
+  CombinedDarkTheme: CombinedTheme;
+} {
   const { LightTheme, DarkTheme } = adaptNavigationTheme({
     reactNavigationLight: NavigationDefaultTheme,
     reactNavigationDark: NavigationDarkTheme,
   });
 
-  const CombinedDefaultTheme = merge(MD3LightTheme, LightTheme);
-  const CombinedDarkTheme = merge(MD3DarkTheme, DarkTheme);
+  const CombinedDefaultTheme: CombinedTheme = merge(MD3LightTheme, LightTheme);
+  const CombinedDarkTheme: CombinedTheme = merge(MD3DarkTheme, DarkTheme);
 
   return { CombinedDefaultTheme, CombinedDarkTheme };
 }
 
 const combinedTheme = BuildCombinedTheme();
 
+type ThemeObject = {
+  appTheme: CombinedTheme;
+  statusBar: StatusBarStyle;
+};
+
+export type AppTheme = "light" | "dark" | "system";
+
 // provides required contexts for the child components
-export default function CustomThemeProvider({ children }) {
-  const [currentTheme, setCurrentTheme] = useState("system");
+export default function CustomThemeProvider({
+  children,
+}: {
+  children: ReactNode;
+}) {
+  const [currentTheme, setCurrentTheme] = useState<AppTheme>("light");
 
   // provides hook for accessing the system theme
   const systemColorScheme = useColorScheme();
@@ -55,7 +73,11 @@ export default function CustomThemeProvider({ children }) {
     AsyncStorage.getItem("app-theme")
       .then((storageTheme) => {
         if (storageTheme !== null) {
-          setCurrentTheme(storageTheme);
+          storageTheme === "system"
+            ? setCurrentTheme("system")
+            : storageTheme === "light"
+            ? setCurrentTheme("light")
+            : setCurrentTheme("dark");
         }
       })
       .catch((err) => console.log(err));
@@ -64,7 +86,7 @@ export default function CustomThemeProvider({ children }) {
   // value for ThemeContext
   const preferences = useMemo(
     () => ({
-      changeTheme: (theme) => {
+      changeTheme: (theme: AppTheme) => {
         // used for chaning and storing the selected theme
         AsyncStorage.setItem("app-theme", theme).catch((err) =>
           console.log(err)
@@ -77,7 +99,7 @@ export default function CustomThemeProvider({ children }) {
   );
 
   // the theme that will be used throughout the app
-  const theme = isThemeDark()
+  const theme: ThemeObject = isThemeDark()
     ? { appTheme: combinedTheme.CombinedDarkTheme, statusBar: "light" }
     : { appTheme: combinedTheme.CombinedDefaultTheme, statusBar: "dark" };
 

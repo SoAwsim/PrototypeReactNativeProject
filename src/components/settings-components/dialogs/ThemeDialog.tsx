@@ -5,11 +5,17 @@ import { LocaleContext, ThemeContext } from "../../../context/AppContext";
 import i18n from "../../../localization/i18n";
 import CustomRadioItem from "../CustomRadioItem";
 
-export default function ThemeDialog({ visible, hideDialog }) {
+export default function ThemeDialog({
+  visible,
+  hideDialog,
+}: {
+  visible: boolean;
+  hideDialog: () => void;
+}) {
   const { currentTheme, changeTheme } = useContext(ThemeContext);
   const { displayLang } = useContext(LocaleContext);
 
-  function selectButton(selectedTheme) {
+  function selectButton(selectedTheme: string) {
     changeTheme(selectedTheme);
     hideDialog();
   }
