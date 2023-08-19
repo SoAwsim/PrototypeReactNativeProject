@@ -1,13 +1,16 @@
-import { DrawerContentScrollView } from "@react-navigation/drawer";
+import {
+  DrawerContentComponentProps,
+  DrawerContentScrollView,
+} from "@react-navigation/drawer";
 import { useRouter } from "expo-router";
 import { Drawer } from "expo-router/drawer";
-import { useWindowDimensions, View } from "react-native";
+import { View, useWindowDimensions } from "react-native";
 import { Drawer as DrawerPaper } from "react-native-paper";
+import i18n from "../../../localization/i18n";
 import { useAuthContext } from "../../../providers/AuthProvider";
 import { useLocaleContext } from "../../../providers/LocaleProvider";
-import i18n from "../../../localization/i18n";
 
-function HomeDrawerContent(props) {
+function HomeDrawerContent(props: DrawerContentComponentProps) {
   const { signOut } = useAuthContext();
   const { displayLang } = useLocaleContext();
   const router = useRouter();
