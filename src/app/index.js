@@ -1,6 +1,6 @@
 import { Redirect, SplashScreen, useRootNavigationState } from "expo-router";
 import { useEffect } from "react";
-import { useAuthContext } from "../context/providers/AuthProvider";
+import { useAuthContext } from "../providers/AuthProvider";
 
 export default function LoadAuthToken() {
   SplashScreen.preventAutoHideAsync();

@@ -6,8 +6,8 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import SettingsItem from "../../components/settings-components/SettingsItem";
 import LanguageDialog from "../../components/settings-components/dialogs/LanguageDialog";
 import ThemeDialog from "../../components/settings-components/dialogs/ThemeDialog";
-import { useLocaleContext } from "../../context/providers/LocaleProvider";
-import { useThemePreferences } from "../../context/providers/ThemeProvider";
+import { useLocaleContext } from "../../providers/LocaleProvider";
+import { useThemePreferences } from "../../providers/ThemeProvider";
 import i18n from "../../localization/i18n";
 
 export default function SettingsScreen() {

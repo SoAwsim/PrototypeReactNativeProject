@@ -2,8 +2,8 @@ import { useState } from "react";
 import { ScrollView, StyleSheet } from "react-native";
 import { Button, TextInput } from "react-native-paper";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { useAuthContext } from "../context/providers/AuthProvider";
-import { useLocaleContext } from "../context/providers/LocaleProvider";
+import { useAuthContext } from "../providers/AuthProvider";
+import { useLocaleContext } from "../providers/LocaleProvider";
 import i18n from "../localization/i18n";
 
 export default function LoginScreen() {

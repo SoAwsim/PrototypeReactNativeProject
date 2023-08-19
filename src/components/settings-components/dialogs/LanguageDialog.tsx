@@ -5,7 +5,7 @@ import {
   LocaleValueType,
   SystemLang,
   useLocaleContext,
-} from "../../../context/providers/LocaleProvider";
+} from "../../../providers/LocaleProvider";
 import i18n from "../../../localization/i18n";
 import CustomRadioItem from "../CustomRadioItem";
 

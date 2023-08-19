@@ -2,7 +2,7 @@ import { useNavigation } from "expo-router";
 import { StyleSheet, View } from "react-native";
 import { Appbar, Text } from "react-native-paper";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { useLocaleContext } from "../../../context/providers/LocaleProvider";
+import { useLocaleContext } from "../../../providers/LocaleProvider";
 import i18n from "../../../localization/i18n";
 
 export default function Home() {

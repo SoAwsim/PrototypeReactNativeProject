@@ -2,8 +2,8 @@ import { Modal, ScrollView } from "react-native";
 import { Button, Dialog } from "react-native-paper";
 import i18n from "../../../localization/i18n";
 import CustomRadioItem from "../CustomRadioItem";
-import { useLocaleContext } from "../../../context/providers/LocaleProvider";
-import { AppTheme, useThemePreferences } from "../../../context/providers/ThemeProvider";
+import { useLocaleContext } from "../../../providers/LocaleProvider";
+import { AppTheme, useThemePreferences } from "../../../providers/ThemeProvider";
 
 export default function ThemeDialog({
   visible,

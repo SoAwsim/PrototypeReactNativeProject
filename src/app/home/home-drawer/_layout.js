@@ -3,8 +3,8 @@ import { useRouter } from "expo-router";
 import { Drawer } from "expo-router/drawer";
 import { useWindowDimensions, View } from "react-native";
 import { Drawer as DrawerPaper } from "react-native-paper";
-import { useAuthContext } from "../../../context/providers/AuthProvider";
-import { useLocaleContext } from "../../../context/providers/LocaleProvider";
+import { useAuthContext } from "../../../providers/AuthProvider";
+import { useLocaleContext } from "../../../providers/LocaleProvider";
 import i18n from "../../../localization/i18n";
 
 function HomeDrawerContent(props) {
