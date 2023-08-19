@@ -2,7 +2,7 @@ import { useRouter } from "expo-router";
 import { useState } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { Appbar, Text } from "react-native-paper";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { EdgeInsets, useSafeAreaInsets } from "react-native-safe-area-context";
 import SettingsItem from "../../components/settings-components/SettingsItem";
 import LanguageDialog from "../../components/settings-components/dialogs/LanguageDialog";
 import ThemeDialog from "../../components/settings-components/dialogs/ThemeDialog";
@@ -80,7 +80,7 @@ export default function SettingsScreen() {
   );
 }
 
-const SettingsStyle = (insets) =>
+const SettingsStyle = (insets: EdgeInsets) =>
   StyleSheet.create({
     MainView: {
       flex: 1,
