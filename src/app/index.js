@@ -1,15 +1,20 @@
-import { Redirect, useRootNavigationState } from "expo-router";
-import { useContext } from "react";
-import { View } from "react-native";
-import { AuthContext } from "../context/AppContext";
+import { Redirect, SplashScreen, useRootNavigationState } from "expo-router";
+import { useEffect } from "react";
+import { useAuthContext } from "../context/providers/AuthProvider";
 
 export default function LoadAuthToken() {
-  const { isSignIn } = useContext(AuthContext);
-
+  SplashScreen.preventAutoHideAsync();
+  const { isSignIn, isLoading } = useAuthContext();
   const navigationState = useRootNavigationState();
 
-  if (!navigationState?.key) {
-    return <View />;
+  useEffect(() => {
+    if (!isLoading && navigationState?.key) {
+      SplashScreen.hideAsync();
+    }
+  }, [isLoading]);
+
+  if (isLoading && !navigationState?.key) {
+    return null;
   } else if (isSignIn) {
     return <Redirect href={"/home"} />;
   } else {

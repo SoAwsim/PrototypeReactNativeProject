@@ -1,29 +1,30 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { ScrollView, StyleSheet } from "react-native";
 import { Button, TextInput } from "react-native-paper";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { AuthContext, LocaleContext } from "../context/AppContext";
+import { useAuthContext } from "../context/providers/AuthProvider";
+import { useLocaleContext } from "../context/providers/LocaleProvider";
 import i18n from "../localization/i18n";
 
 export default function LoginScreen() {
   const insets = useSafeAreaInsets(); // safe area paddings
   const style = loginStyle(insets);
 
-  const { displayLang } = useContext(LocaleContext);
+  const { displayLang } = useLocaleContext();
 
   const [enteredUsername, setEnteredUsername] = useState("");
   const [enteredPassword, setEnteredPassword] = useState("");
 
-  const { signIn, isError, setIsError } = useContext(AuthContext);
+  const { signIn, isError, clearInputError } = useAuthContext();
 
   function usernameInputHandler(enteredUsername) {
     setEnteredUsername(enteredUsername);
-    setIsError(false); // clear error state when anything is typed
+    clearInputError(); // clear error state when anything is typed
   }
 
   function passwordInputHandler(enteredPassword) {
     setEnteredPassword(enteredPassword);
-    setIsError(false); // clear error state when anything is typed
+    clearInputError(); // clear error state when anything is typed
   }
 
   function signInHandler() {
@@ -31,7 +32,7 @@ export default function LoginScreen() {
       "Username: " + enteredUsername + "\nPassword: " + enteredPassword
     ); // for debugging proposes remove later
 
-    signIn({ enteredUsername, enteredPassword }); // use singIn function from AuthContext
+    signIn(enteredUsername, enteredPassword); // use singIn function from AuthContext
   }
 
   return (

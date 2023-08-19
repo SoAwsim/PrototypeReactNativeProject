@@ -7,7 +7,7 @@ import {
 } from "@react-navigation/native";
 import merge from "deepmerge";
 import { StatusBar, StatusBarStyle } from "expo-status-bar";
-import { useEffect, useMemo, useState, ReactNode } from "react";
+import { useEffect, useMemo, useState, ReactNode, createContext, useContext } from "react";
 import { useColorScheme } from "react-native";
 import {
   MD3DarkTheme,
@@ -15,7 +15,6 @@ import {
   PaperProvider,
   adaptNavigationTheme,
 } from "react-native-paper";
-import { ThemeContext } from "../AppContext";
 import { ThemeProp } from "react-native-paper/lib/typescript/types";
 
 type CombinedTheme = Theme & ThemeProp;
@@ -44,6 +43,23 @@ type ThemeObject = {
 };
 
 export type AppTheme = "light" | "dark" | "system";
+
+export type ThemePreferences = {
+  changeTheme: (theme: AppTheme) => void,
+  currentTheme: AppTheme,
+};
+
+const ThemeContext = createContext<ThemePreferences | undefined>(undefined); // used for getting and setting the theme
+
+export function useThemePreferences() {
+  const context = useContext(ThemeContext);
+
+  if (context === undefined) {
+    throw Error('useTheme cannot be used outside of CustomThemeProvider');
+  }
+
+  return context;
+}
 
 // provides required contexts for the child components
 export default function CustomThemeProvider({
@@ -84,7 +100,7 @@ export default function CustomThemeProvider({
   }, []);
 
   // value for ThemeContext
-  const preferences = useMemo(
+  const preferences: ThemePreferences = useMemo(
     () => ({
       changeTheme: (theme: AppTheme) => {
         // used for chaning and storing the selected theme

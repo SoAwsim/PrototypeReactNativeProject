@@ -1,8 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getLocales } from "expo-localization";
-import { ReactNode, useEffect, useMemo, useRef, useState } from "react";
+import { ReactNode, createContext, useContext, useEffect, useMemo, useRef, useState } from "react";
 import { AppState } from "react-native";
-import { LocaleContext } from "../AppContext";
 
 export enum SystemLang {
   und,
@@ -27,6 +26,21 @@ function findDisplayLang(lang: SystemLang): string {
     case SystemLang.tr:
       return "tr";
   }
+}
+
+// locale context is created with undefine initially
+const LocaleContext = createContext<LocaleValueType | undefined>(undefined); // used for managing and getting the state of locale
+
+// function to use LocaleContext in any component
+export function useLocaleContext() {
+  const context = useContext(LocaleContext);
+
+  // if LocaleContext is used outside of LocaleProvider component throw an error
+  if (context === undefined) {
+    throw Error('LocaleContext cannot be used outside of LocaleProvider component');
+  }
+
+  return context;
 }
 
 export default function LocaleProvider({ children }: { children: ReactNode }) {

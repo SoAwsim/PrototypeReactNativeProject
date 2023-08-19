@@ -1,9 +1,9 @@
-import { useContext } from "react";
 import { Modal, ScrollView } from "react-native";
 import { Button, Dialog } from "react-native-paper";
-import { LocaleContext, ThemeContext } from "../../../context/AppContext";
 import i18n from "../../../localization/i18n";
 import CustomRadioItem from "../CustomRadioItem";
+import { useLocaleContext } from "../../../context/providers/LocaleProvider";
+import { AppTheme, useThemePreferences } from "../../../context/providers/ThemeProvider";
 
 export default function ThemeDialog({
   visible,
@@ -12,10 +12,10 @@ export default function ThemeDialog({
   visible: boolean;
   hideDialog: () => void;
 }) {
-  const { currentTheme, changeTheme } = useContext(ThemeContext);
-  const { displayLang } = useContext(LocaleContext);
+  const { currentTheme, changeTheme } = useThemePreferences();
+  const { displayLang } = useLocaleContext();
 
-  function selectButton(selectedTheme: string) {
+  function selectButton(selectedTheme: AppTheme) {
     changeTheme(selectedTheme);
     hideDialog();
   }

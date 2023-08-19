@@ -1,12 +1,13 @@
 import { useRouter } from "expo-router";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { Appbar, Text } from "react-native-paper";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import SettingsItem from "../../components/settings-components/SettingsItem";
 import LanguageDialog from "../../components/settings-components/dialogs/LanguageDialog";
 import ThemeDialog from "../../components/settings-components/dialogs/ThemeDialog";
-import { LocaleContext, ThemeContext } from "../../context/AppContext";
+import { useLocaleContext } from "../../context/providers/LocaleProvider";
+import { useThemePreferences } from "../../context/providers/ThemeProvider";
 import i18n from "../../localization/i18n";
 
 export default function SettingsScreen() {
@@ -14,11 +15,11 @@ export default function SettingsScreen() {
   const style = SettingsStyle(insets);
 
   const [themeDialogVisible, setDialogVisible] = useState(false);
-  const { currentTheme } = useContext(ThemeContext);
+  const { currentTheme } = useThemePreferences();
 
   const [langDialogVisible, setLangDialogVisible] = useState(false);
 
-  const { displayLang } = useContext(LocaleContext);
+  const { displayLang } = useLocaleContext();
 
   const showThemeDialog = () => setDialogVisible(true);
   const hideThemeDialog = () => setDialogVisible(false);

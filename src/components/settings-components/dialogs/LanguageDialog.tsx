@@ -1,11 +1,10 @@
-import { useContext } from "react";
 import { Modal, ScrollView } from "react-native";
 import { Button, Dialog, Text } from "react-native-paper";
-import { LocaleContext } from "../../../context/AppContext";
 import {
   AppLang,
   LocaleValueType,
   SystemLang,
+  useLocaleContext,
 } from "../../../context/providers/LocaleProvider";
 import i18n from "../../../localization/i18n";
 import CustomRadioItem from "../CustomRadioItem";
@@ -17,7 +16,7 @@ export default function LanguageDialog({
   visible: boolean;
   hideDialog: () => void;
 }) {
-  const langContext: LocaleValueType = useContext(LocaleContext);
+  const langContext: LocaleValueType = useLocaleContext();
 
   const showUseSystem = langContext.systemLang !== SystemLang.und;
 
