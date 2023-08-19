@@ -1,0 +1,3 @@
+export const config = {
+  API_KEY: "RT7FORiQj5STHQ0YRTIiO9ISWS5ZSHA8Y3RXaWLD",
+};
