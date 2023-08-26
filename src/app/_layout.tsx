@@ -1,7 +1,7 @@
 import { Stack } from "expo-router";
-import AuthProvider from "../providers/AuthProvider";
-import LocaleProvider from "../providers/LocaleProvider";
-import CustomThemeProvider from "../providers/ThemeProvider";
+import AuthProvider from "@/providers/AuthProvider";
+import LocaleProvider from "@/providers/LocaleProvider";
+import CustomThemeProvider from "@/providers/ThemeProvider";
 
 export default function RootLayout() {
   return (

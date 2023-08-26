@@ -2,10 +2,10 @@ import { Stack, useNavigation } from "expo-router";
 import { StyleSheet, View } from "react-native";
 import { Appbar, Text } from "react-native-paper";
 import { EdgeInsets, useSafeAreaInsets } from "react-native-safe-area-context";
-import { useLocaleContext } from "../../../providers/LocaleProvider";
-import i18n from "../../../localization/i18n";
+import { useLocaleContext } from "@/providers/LocaleProvider";
+import i18n from "@/localization/i18n";
 import { DrawerActions } from "@react-navigation/native";
-import { useAuthContext } from "../../../providers/AuthProvider";
+import { useAuthContext } from "@/providers/AuthProvider";
 
 export default function Home() {
   const insets = useSafeAreaInsets();

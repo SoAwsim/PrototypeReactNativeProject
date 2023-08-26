@@ -2,9 +2,9 @@ import { useRef, useState } from "react";
 import { ScrollView, StyleSheet, TextInput as NativeInput } from "react-native";
 import { Button, TextInput } from "react-native-paper";
 import { EdgeInsets, useSafeAreaInsets } from "react-native-safe-area-context";
-import { useAuthContext } from "../providers/AuthProvider";
-import { useLocaleContext } from "../providers/LocaleProvider";
-import i18n from "../localization/i18n";
+import { useAuthContext } from "@/providers/AuthProvider";
+import { useLocaleContext } from "@/providers/LocaleProvider";
+import i18n from "@/localization/i18n";
 
 export default function LoginScreen() {
   const insets = useSafeAreaInsets(); // safe area paddings
@@ -15,6 +15,7 @@ export default function LoginScreen() {
   const [enteredUsername, setEnteredUsername] = useState("");
   const [enteredPassword, setEnteredPassword] = useState("");
 
+  // used to navigate to the password field with keyboard next button from username field
   const refPasswordInput = useRef<NativeInput | null>(null);
 
   const { signIn, isError, clearInputError } = useAuthContext();

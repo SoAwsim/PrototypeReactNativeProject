@@ -1,6 +1,6 @@
 import { Redirect, SplashScreen, useRootNavigationState } from "expo-router";
 import { useEffect } from "react";
-import { useAuthContext } from "../providers/AuthProvider";
+import { useAuthContext } from "@/providers/AuthProvider";
 
 // Show the splash screen until navigation and auth state is ready
 SplashScreen.preventAutoHideAsync();

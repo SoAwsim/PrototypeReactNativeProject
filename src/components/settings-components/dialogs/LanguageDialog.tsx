@@ -5,8 +5,8 @@ import {
   LocaleValueType,
   SystemLang,
   useLocaleContext,
-} from "../../../providers/LocaleProvider";
-import i18n from "../../../localization/i18n";
+} from "@/providers/LocaleProvider";
+import i18n from "@/localization/i18n";
 import CustomRadioItem from "../CustomRadioItem";
 
 export default function LanguageDialog({

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { config } from "../../Config";
+import { config } from "@/../Config";
 import { useRouter } from "expo-router";
 import {
   ReactNode,

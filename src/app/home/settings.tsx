@@ -3,12 +3,12 @@ import { useState } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { Appbar, Text } from "react-native-paper";
 import { EdgeInsets, useSafeAreaInsets } from "react-native-safe-area-context";
-import SettingsItem from "../../components/settings-components/SettingsItem";
-import LanguageDialog from "../../components/settings-components/dialogs/LanguageDialog";
-import ThemeDialog from "../../components/settings-components/dialogs/ThemeDialog";
-import { useLocaleContext } from "../../providers/LocaleProvider";
-import { useThemePreferences } from "../../providers/ThemeProvider";
-import i18n from "../../localization/i18n";
+import SettingsItem from "@/components/settings-components/SettingsItem";
+import LanguageDialog from "@/components/settings-components/dialogs/LanguageDialog";
+import ThemeDialog from "@/components/settings-components/dialogs/ThemeDialog";
+import { useLocaleContext } from "@/providers/LocaleProvider";
+import { useThemePreferences } from "@/providers/ThemeProvider";
+import i18n from "@/localization/i18n";
 
 export default function SettingsScreen() {
   const insets = useSafeAreaInsets();

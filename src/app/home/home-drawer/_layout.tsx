@@ -6,9 +6,9 @@ import { useRouter } from "expo-router";
 import { Drawer } from "expo-router/drawer";
 import { View, useWindowDimensions } from "react-native";
 import { Drawer as DrawerPaper } from "react-native-paper";
-import i18n from "../../../localization/i18n";
-import { useAuthContext } from "../../../providers/AuthProvider";
-import { useLocaleContext } from "../../../providers/LocaleProvider";
+import i18n from "@/localization/i18n";
+import { useAuthContext } from "@/providers/AuthProvider";
+import { useLocaleContext } from "@/providers/LocaleProvider";
 
 function HomeDrawerContent(props: DrawerContentComponentProps) {
   const { signOut } = useAuthContext();
