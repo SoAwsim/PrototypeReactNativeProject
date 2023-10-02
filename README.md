@@ -1,3 +1,2 @@
-This is the prototype private repo for our react native project until the repo on the Yeditepe is initialized.
-
-You will need to enter the api key in the Config.ts (or js file if you prefer that) file at the root of the project. See the Config.ts.env file for an example.
+This is a prototype app I have created during learing a React Native for another project.
+Currently this app has some dummy screens and some basic settings but my goal here is to show off my ability to use React Native properly.
