@@ -93,10 +93,11 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
   const authContext: AuthPreferences = useMemo(
     () => ({
       signIn: (username, password) => {
-        const loginAPI = "https://workbench.persystlab.org/api/login.php";
+        // const loginAPI = "https://workbench.persystlab.org/api/login.php";
 
         try {
-          axios
+          // backend server does not exist anymore since project was cancelled
+          /*axios
             .post(loginAPI, {
               username: username,
               password: password,
@@ -112,7 +113,9 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
                 console.log("login failed");
               }
             })
-            .catch((err) => console.log(err));
+            .catch((err) => console.log(err));*/
+            dispatch({ type: "SIGN_IN", token: "dummy-token" });
+            router.replace("/home");
         } catch (error) {
           if (error instanceof TypeError) {
             // handle misusage of API_KEY
