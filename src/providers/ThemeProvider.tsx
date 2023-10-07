@@ -6,14 +6,14 @@ import {
   ThemeProvider,
 } from "@react-navigation/native";
 import merge from "deepmerge";
-import { StatusBar, StatusBarStyle } from "expo-status-bar";
+import { setStatusBarStyle } from "expo-status-bar";
 import {
-  useEffect,
-  useMemo,
-  useState,
   ReactNode,
   createContext,
   useContext,
+  useEffect,
+  useMemo,
+  useState,
 } from "react";
 import { useColorScheme } from "react-native";
 import {
@@ -44,11 +44,6 @@ function BuildCombinedTheme(): {
 
 const combinedTheme = BuildCombinedTheme();
 
-type ThemeObject = {
-  appTheme: CombinedTheme;
-  statusBar: StatusBarStyle;
-};
-
 export type AppTheme = "light" | "dark" | "system";
 
 export type ThemePreferences = {
@@ -75,9 +70,8 @@ export default function CustomThemeProvider({
   children: ReactNode;
 }) {
   const [currentTheme, setCurrentTheme] = useState<AppTheme>("light");
-  
+
   let appTheme = combinedTheme.CombinedDefaultTheme;
-  let statusBar: StatusBarStyle = "auto";
 
   // provides hook for accessing the system theme
   const systemColorScheme = useColorScheme();
@@ -85,18 +79,18 @@ export default function CustomThemeProvider({
   switch (currentTheme) {
     case "system":
       appTheme =
-          systemColorScheme === "dark"
-            ? combinedTheme.CombinedDarkTheme
-            : combinedTheme.CombinedDefaultTheme;
-          statusBar = "auto";
+        systemColorScheme === "dark"
+          ? combinedTheme.CombinedDarkTheme
+          : combinedTheme.CombinedDefaultTheme;
+      setStatusBarStyle("auto");
       break;
     case "dark":
       appTheme = combinedTheme.CombinedDarkTheme;
-      statusBar = "light";
+      setStatusBarStyle("light");
       break;
     case "light":
       appTheme = combinedTheme.CombinedDefaultTheme;
-      statusBar = "dark";
+      setStatusBarStyle("dark");
       break;
   }
 
@@ -134,7 +128,6 @@ export default function CustomThemeProvider({
     <PaperProvider theme={appTheme}>
       <ThemeProvider value={appTheme}>
         <ThemeContext.Provider value={preferences}>
-          <StatusBar style={statusBar} />
           {children}
         </ThemeContext.Provider>
       </ThemeProvider>
