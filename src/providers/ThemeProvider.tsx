@@ -7,7 +7,14 @@ import {
 } from "@react-navigation/native";
 import merge from "deepmerge";
 import { StatusBar, StatusBarStyle } from "expo-status-bar";
-import { useEffect, useMemo, useState, ReactNode, createContext, useContext } from "react";
+import {
+  useEffect,
+  useMemo,
+  useState,
+  ReactNode,
+  createContext,
+  useContext,
+} from "react";
 import { useColorScheme } from "react-native";
 import {
   MD3DarkTheme,
@@ -45,8 +52,8 @@ type ThemeObject = {
 export type AppTheme = "light" | "dark" | "system";
 
 export type ThemePreferences = {
-  changeTheme: (theme: AppTheme) => void,
-  currentTheme: AppTheme,
+  changeTheme: (theme: AppTheme) => void;
+  currentTheme: AppTheme;
 };
 
 const ThemeContext = createContext<ThemePreferences | undefined>(undefined); // used for getting and setting the theme
@@ -55,7 +62,7 @@ export function useThemePreferences() {
   const context = useContext(ThemeContext);
 
   if (context === undefined) {
-    throw Error('useTheme cannot be used outside of CustomThemeProvider');
+    throw Error("useTheme cannot be used outside of CustomThemeProvider");
   }
 
   return context;
@@ -68,21 +75,30 @@ export default function CustomThemeProvider({
   children: ReactNode;
 }) {
   const [currentTheme, setCurrentTheme] = useState<AppTheme>("light");
+  
+  let appTheme = combinedTheme.CombinedDefaultTheme;
+  let statusBar: StatusBarStyle = "auto";
 
   // provides hook for accessing the system theme
   const systemColorScheme = useColorScheme();
 
-  // decide if theme should be dark or not
-  const isThemeDark = () => {
-    switch (currentTheme) {
-      case "system":
-        return systemColorScheme === "dark";
-      case "light":
-        return false;
-      case "dark":
-        return true;
-    }
-  };
+  switch (currentTheme) {
+    case "system":
+      appTheme =
+          systemColorScheme === "dark"
+            ? combinedTheme.CombinedDarkTheme
+            : combinedTheme.CombinedDefaultTheme;
+          statusBar = "auto";
+      break;
+    case "dark":
+      appTheme = combinedTheme.CombinedDarkTheme;
+      statusBar = "light";
+      break;
+    case "light":
+      appTheme = combinedTheme.CombinedDefaultTheme;
+      statusBar = "dark";
+      break;
+  }
 
   // try to load user selected theme from storage, if non existent or failed return back to default 'system'
   useEffect(() => {
@@ -114,17 +130,12 @@ export default function CustomThemeProvider({
     [currentTheme]
   );
 
-  // the theme that will be used throughout the app
-  const theme: ThemeObject = isThemeDark()
-    ? { appTheme: combinedTheme.CombinedDarkTheme, statusBar: "light" }
-    : { appTheme: combinedTheme.CombinedDefaultTheme, statusBar: "dark" };
-
   return (
-    <PaperProvider theme={theme.appTheme}>
-      <ThemeProvider value={theme.appTheme}>
+    <PaperProvider theme={appTheme}>
+      <ThemeProvider value={appTheme}>
         <ThemeContext.Provider value={preferences}>
+          <StatusBar style={statusBar} />
           {children}
-          <StatusBar style={theme.statusBar} />
         </ThemeContext.Provider>
       </ThemeProvider>
     </PaperProvider>
