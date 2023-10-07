@@ -69,7 +69,7 @@ export default function CustomThemeProvider({
 }: {
   children: ReactNode;
 }) {
-  const [currentTheme, setCurrentTheme] = useState<AppTheme>("light");
+  const [currentTheme, setCurrentTheme] = useState<AppTheme>("system");
 
   let appTheme = combinedTheme.CombinedDefaultTheme;
 
